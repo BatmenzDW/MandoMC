@@ -1,0 +1,18 @@
+koth:
+  interval-minutes: 120                 # Auto-start every 2 hours
+  timezone: America/Chicago            # Timezone for scheduling
+  capture-time-seconds: 60            # How long to hold for a capture
+
+  rewards:
+    - "cc give physical tier_one 1 %player%"  # Reward command for the winning player
+
+  regions:
+    hoth:
+      name: Hoth Canyon                # Display name
+      world: Hoth                     # Must match exact world name in-game
+      shape: circle                   # Circular region
+      center:
+        x: -144.0
+        y: 30.0
+        z: 143.0
+      radius: 10                      # Radius for circular region

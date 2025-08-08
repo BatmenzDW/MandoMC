@@ -1,0 +1,52 @@
+warps:
+  Earth:
+    slot: 13
+    name: '&a&lEarth'
+    block: GRASS_BLOCK
+    world: world
+    description:
+      - '&c→ Claimable'
+    x: 681
+    y: 93
+    z: -161
+    yaw: 246.898
+    pitch: -5.7
+
+  Naboo:
+    slot: 21
+    name: '&b&lNaboo'
+    block: PRISMARINE
+    world: Naboo
+    description:
+      - '&a→ Spawn'
+    x: -12868
+    y: 142
+    z: 1262
+    yaw: -3.27
+    pitch: -1.83
+
+  Ilum:
+    slot: 33
+    name: '&b&lIlum'
+    block: BLUE_ICE
+    world: Ilum
+    description:
+      - '&3→ Kyber Crystals'
+    x: 11
+    y: -60
+    z: -56
+    yaw: 1.8
+    pitch: 4.5
+
+  Hoth:
+    slot: 50
+    name: '&f&lHoth'
+    block: SNOW_BLOCK
+    world: Hoth
+    description:
+      - '&c→ KOTH'
+    x: -47
+    y: 80
+    z: -153
+    yaw: -18.75
+    pitch: -1.65

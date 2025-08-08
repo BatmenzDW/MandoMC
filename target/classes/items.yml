@@ -1,0 +1,340 @@
+items:
+  obiwan:
+    name: '&9Obi-Wan''s Lightsaber'
+    item_type: SHIELD
+    speciality: SABER
+    custom-model-data: 1
+    damage: 9.5
+    recipe:
+      - ' HK'
+      - ECD
+      - 'DD '
+    ingredients:
+      H: straight_hilt
+      K: blue_kyber
+      E: precision_emitter
+      C: plasma_capacitor
+      D: durasteel_sheet
+
+  cal_survivor_crossguard:
+    name: '&bCal Kestis''s Lightsaber'
+    item_type: SHIELD
+    speciality: SABER
+    custom-model-data: 2
+    damage: 9.5
+    recipe:
+      - ' HK'
+      - ECP
+      - 'PP '
+    ingredients:
+      H: great_hilt
+      K: blue_kyber
+      E: precision_emitter
+      C: plasma_capacitor
+      P: phrik_sheet
+
+  windu:
+    name: '&5Mace Windu''s Lightsaber'
+    item_type: SHIELD
+    speciality: SABER
+    custom-model-data: 3
+    damage: 10.5
+    recipe:
+      - ' HK'
+      - ECP
+      - 'PP '
+    ingredients:
+      H: straight_hilt
+      K: purple_kyber
+      E: precision_emitter
+      C: plasma_capacitor
+      P: phrik_sheet
+
+  quigon:
+    name: '&aQui-Gon Jinn''s Lightsaber'
+    item_type: SHIELD
+    speciality: SABER
+    custom-model-data: 4
+    damage: 9
+    recipe:
+      - ' HK'
+      - ECD
+      - 'DD '
+    ingredients:
+      H: straight_hilt
+      K: green_kyber
+      E: precision_emitter
+      C: plasma_capacitor
+      D: durasteel_sheet
+
+  ventress_yellow:
+    name: '&eAsajj Ventress''s Lightsaber'
+    item_type: SHIELD
+    speciality: SABER
+    custom-model-data: 5
+    damage: 10
+    recipe:
+      - ' HK'
+      - ECP
+      - 'PP '
+    ingredients:
+      H: whip_hilt
+      K: yellow_kyber
+      E: precision_emitter
+      C: plasma_capacitor
+      P: phrik_sheet
+
+
+  # ======================
+  # Kyber Crystals
+  # ======================
+
+  red_kyber:
+    name: '&cRed Kyber Crystal'
+    item_type: NETHER_STAR
+    speciality: MATERIAL
+    custom-model-data: 1
+    lore:
+      - '&7Found in the depths of Ilum Caves.'
+
+  orange_kyber:
+    name: '&6Orange Kyber Crystal'
+    item_type: NETHER_STAR
+    speciality: MATERIAL
+    custom-model-data: 2
+    lore:
+      - '&7Found in the depths of Ilum Caves.'
+
+  yellow_kyber:
+    name: '&eYellow Kyber Crystal'
+    item_type: NETHER_STAR
+    speciality: MATERIAL
+    custom-model-data: 3
+    lore:
+      - '&7Found in the depths of Ilum Caves.'
+
+  green_kyber:
+    name: '&aGreen Kyber Crystal'
+    item_type: NETHER_STAR
+    speciality: MATERIAL
+    custom-model-data: 4
+    lore:
+      - '&7Found in the depths of Ilum Caves.'
+
+  purple_kyber:
+    name: '&5Purple Kyber Crystal'
+    item_type: NETHER_STAR
+    speciality: MATERIAL
+    custom-model-data: 5
+    lore:
+      - '&7Found in the depths of Ilum Caves.'
+
+  white_kyber:
+    name: '&fWhite Kyber Crystal'
+    item_type: NETHER_STAR
+    speciality: MATERIAL
+    custom-model-data: 6
+    lore:
+      - '&7Found in the depths of Ilum Caves.'
+
+  blue_kyber:
+    name: '&9Blue Kyber Crystal'
+    item_type: NETHER_STAR
+    speciality: MATERIAL
+    custom-model-data: 7
+    lore:
+      - '&7Found in the depths of Ilum Caves.'
+
+  # ======================
+  # Materials
+  # ======================
+
+  agrinium:
+    name: '&7Agrinium'
+    item_type: ECHO_SHARD
+    speciality: MATERIAL
+    custom-model-data: 2
+  alloy_plating:
+    name: '&7Alloy Plating'
+    item_type: ECHO_SHARD
+    speciality: MATERIAL
+    custom-model-data: 3
+  aurodium:
+    name: '&7Aurodium'
+    item_type: ECHO_SHARD
+    speciality: MATERIAL
+    custom-model-data: 4
+
+  # ======================
+  # Hilts
+  # ======================
+
+  straight_hilt:
+    name: '&7Straight Hilt'
+    item_type: ECHO_SHARD
+    speciality: MATERIAL
+    custom-model-data: 5
+    lore:
+      - '&7A classic hilt design,'
+      - '&7favored by Jedi for its balance.'
+      - ''
+      - '&6&oCraftable'
+    recipe:
+      - 'DD '
+      - 'DC '
+      - '   '
+    ingredients:
+      D: durasteel
+      C: energy_conduit
+
+  great_hilt:
+    name: '&7Great Hilt'
+    item_type: ECHO_SHARD
+    speciality: MATERIAL
+    custom-model-data: 6
+    lore:
+      - '&7A heavy, two-handed hilt'
+      - '&7built for power and stability.'
+      - ''
+      - '&6&oCraftable'
+    recipe:
+      - PPP
+      - PCP
+      - '   '
+    ingredients:
+      P: phrik
+      C: energy_conduit
+
+  whip_hilt:
+    name: '&7Whip Hilt'
+    item_type: ECHO_SHARD
+    speciality: MATERIAL
+    custom-model-data: 7
+    lore:
+      - '&7A curved hilt favored by'
+      - '&7unconventional duelists.'
+      - ''
+      - '&6&oCraftable'
+    recipe:
+      - 'DP '
+      - 'PC '
+      - '   '
+    ingredients:
+      D: durasteel
+      P: phrik
+      C: energy_conduit
+
+  pike_hilt:
+    name: '&7Pike Hilt'
+    item_type: ECHO_SHARD
+    speciality: MATERIAL
+    custom-model-data: 8
+    lore:
+      - '&7An extended hilt for defensive'
+      - '&7and long-reaching strikes.'
+      - ''
+      - '&6&oCraftable'
+    recipe:
+      - PDP
+      - PCP
+      - '   '
+    ingredients:
+      D: durasteel
+      P: phrik
+      C: energy_conduit
+
+  # ======================
+  # Saber Parts
+  # ======================
+
+  durasteel_sheet:
+    name: '&7Durasteel Sheet'
+    item_type: ECHO_SHARD
+    speciality: MATERIAL
+    custom-model-data: 12
+    lore:
+      - '&7A tough, durable metal sheet'
+      - '&7used in saber construction.'
+      - ''
+      - '&a&oCrafted by smelting Durasteel'
+      - '&a&oin a blast furnace.'
+
+  phrik_sheet:
+    name: '&7Phrik Sheet'
+    item_type: ECHO_SHARD
+    speciality: MATERIAL
+    custom-model-data: 13
+    lore:
+      - '&7A rare, lightsaber-resistant alloy,'
+      - '&7perfect for advanced hilts.'
+      - ''
+      - '&a&oCrafted by smelting Phrik'
+      - '&a&oin a blast furnace.'
+
+  agrinium_sheet:
+    name: '&7Agrinium Sheet'
+    item_type: ECHO_SHARD
+    speciality: MATERIAL
+    custom-model-data: 1
+    lore:
+      - '&7Forged from pure Agrinium for'
+      - '&7lightsaber construction.'
+      - ''
+      - '&a&oCrafted by smelting Agrinium'
+      - '&a&oin a blast furnace.'
+
+  plasma_capacitor:
+    item_type: ECHO_SHARD
+    name: '&7Plasma Capacitor'
+    custom-model-data: 9
+    lore:
+      - '&7Stores raw energy to'
+      - '&7power lightsabers.'
+    rarity: 0.25 # fairly common
+
+  precision_emitter:
+    item_type: ECHO_SHARD
+    name: '&7Precision Emitter'
+    custom-model-data: 10
+    lore:
+      - '&7Directs the kyber’s energy'
+      - '&7into a focused blade.'
+    rarity: 0.15 # uncommon
+
+  energy_conduit:
+    item_type: ECHO_SHARD
+    name: '&7Energy Conduit'
+    custom-model-data: 11
+    lore:
+      - '&7Channels power from'
+      - '&7the hilt to the blade.'
+    rarity: 0.15 # uncommon
+
+  durasteel:
+    item_type: ECHO_SHARD
+    name: '&7Durasteel'
+    custom-model-data: 14
+    lore:
+      - '&7A tough, durable metal'
+      - '&7used as a base for forging sheets.'
+    rarity: 0.35 # common
+
+  phrik:
+    item_type: ECHO_SHARD
+    name: '&7Phrik'
+    custom-model-data: 15
+    lore:
+      - '&7A rare, lightsaber-resistant alloy'
+      - '&7used to create advanced hilts and armor.'
+    rarity: 0.05 # **very rare**
+
+# =====================
+# Saber Throw Settings
+# =====================
+throw-settings:
+  speed: 0.6 # forward speed of saber throw
+  curve-amplitude: 0.5 # how far the saber swings side to side (lower = straighter, higher = wider arc)
+  curve-frequency: 2.0 # how fast the saber swings (higher = tighter wiggle, lower = long wave)
+  max-ticks: 30 # how long saber flies before returning automatically (ticks; 20 ticks = 1 second)
+  cooldown: 10000 # cooldown in milliseconds (10000 = 10 seconds)
+  damage: 24 # damage dealt to entities hit by the saber

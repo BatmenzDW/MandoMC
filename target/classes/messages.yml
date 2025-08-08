@@ -1,0 +1,4 @@
+koth-start: "&6[KOTH] &fKOTH event &e{region} &fhas started!"
+koth-capture-start: "&6[KOTH] &fFaction &e{faction} &fis now capturing &e{region} &f!"
+koth-capture-end: "&6[KOTH] &fFaction &e{faction} &fled by player &e{player} &fhas captured &e{region}&f!"
+koth-bossbar-name: "&6KOTH &f[{region}]"

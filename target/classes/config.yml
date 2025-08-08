@@ -1,0 +1,65 @@
+# ================================
+# ⚙️ MandoMC Global Settings
+# ================================
+# These options control world behavior, gameplay restrictions, and mob activity.
+
+# ================================
+# 🚫 Block Placement Restrictions
+# ================================
+# true = players CANNOT place this block
+# false = players CAN place this block
+disable-block-place:
+  end_crystal: true
+  end_portal_frame: true
+  bedrock: true
+
+# ================================
+# 🚫 Item & Gameplay Restrictions
+# ================================
+restrictions:
+  # Prevents using / throwing ender pearls
+  disable-enderpearls: true
+
+  # Disables brewing stand interactions entirely
+  disable-potion-brewing: true
+
+  # Prevents villager trading GUI from opening
+  disable-villager-trading: true
+
+# ================================
+# 🛡️ Mob & Spawn Settings
+# ================================
+mobs:
+  # Prevents phantoms from spawning naturally at night
+  disable-natural-phantoms: true
+
+# ================================
+# 🌸 Aesthetics
+# ================================
+
+tab:
+  header: "&#ff0000&lMandoMC\n&7Star Wars Factions"
+  footer: "&6play.mandomc.net\n&7Use /vote to get rewards!"
+
+scoreboard:
+  title: "&4&lMandoMC"
+  lines:
+    - "&7----------------"
+    - "&6» &4&lFaction"
+    - "     &c→ &o%factionsuuid_faction_name%"
+    - "&6» &4&lPower"
+    - "     &c→ &o%factionsuuid_faction_power% DTR"
+    - "&6» &4&lBalance"
+    - "     &c→ &o$%vault_eco_balance_formatted%"
+    - "&7----------------"
+    - "&6play.mandomc.net"
+
+MOTD: '            &c&lMandoMC &7x &a&lOpen now! &7[1.21]                 &3Vehicles &7- &bForce Powers &7- &2Ewok Hunt &7- &aSabers'
+VersionName: 'MandoMC 1.21'
+ServerListHoverText:
+  - "§7§m---------------------------§r§c§lMandoMC§r§7§m---------------------------"
+  - "   §cSabers §7- §6Blasters §7- §eVehicles §7- §2Ewok Hunt §7- §bForce Powers §7- §dFactions"
+  - "§7§m--------------------------------------------------------------"
+  - "§fWebsite: §7- §a§oComing soon..."
+  - "§fDiscord: §7- §9discord.gg/3jGmpSddNt"
+  - "§7§m--------------------------------------------------------------"

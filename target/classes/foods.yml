@@ -1,0 +1,19 @@
+foods:
+  bantha_burger:
+    name: '&6Bantha Burger'
+    custom-model-data: 10
+    hunger: 6
+    saturation: 7.2
+    eat-time: 32
+    lore:
+      - '&7A juicy patty from the Dune Sea.'
+      - '&eRestores 3 bars of hunger.'
+  food2:
+    name: '&6Bantha Burger'
+    custom-model-data: 10
+    hunger: 6
+    saturation: 7.2
+    eat-time: 32
+    lore:
+      - '&7A juicy patty from the Dune Sea.'
+      - '&eRestores 3 bars of hunger.'

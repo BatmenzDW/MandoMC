@@ -1,0 +1,38 @@
+name: MandoMC
+version: '${project.version}'
+main: com.astuteflamez.mandomc.MandoMC
+api-version: '1.21'
+load: POSTWORLD
+depend: [Factions, LuckPerms, ProtocolLib, PlaceholderAPI, packetevents]
+softdepend:
+  - WeaponMechanics
+  - WorldGuard
+commands:
+  mmcreload:
+  giveitem:
+    description: Give any custom item from items.yml
+    usage: /giveitem <item_id|all>
+    permission: mandomc.giveitem
+  warps:
+    description: Opens the warp GUI menu
+    usage: /warps
+    permission: mandomc.warps
+    aliases: [ warp ]
+  events:
+    description: View upcoming KOTH events
+    usage: /events
+    aliases: [ event ]
+  koth:
+    description: Admin control for KOTH events
+    permission: koth.admin
+  recipes:
+    aliases: [ recipe ]
+  chesthunt:
+    description: Controls the Chest Hunt event
+    usage: /<command> [start|stop|wand]
+    permission: mandomc.chesthunt
+    aliases: [ chevent, chunt ]
+  oreevent:
+    description: Start/stop ore event and get wand
+  rhydonium:
+  discord:

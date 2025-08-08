@@ -1,0 +1,32 @@
+events:
+  randomizer:
+    min-delay: 20
+    max-delay: 30
+    weights:
+      none: 10
+      koth: 20
+      ore_event: 30
+      chest_hunt: 40
+
+  koth:
+    capture-time-seconds: 60
+    rewards:
+      - crates key give %player% galactic 1
+    regions:
+      hoth:
+        name: Hoth Canyon
+        world: Hoth
+        shape: circle
+        center:
+          x: -144.0
+          y: 30.0
+          z: 143.0
+        radius: 10
+
+  chesthunt:
+    chest-count: 15
+    rewards-per-chest: 3
+
+  oreevent:
+    ore-count: 1
+    world: Geonosis

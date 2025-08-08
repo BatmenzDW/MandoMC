@@ -1,0 +1,23 @@
+Prefix: "&b&l(!) &8» "
+DisabledFeatured: "&cThis feature is disabled!"
+NoPerm: "&cThe force is not with you..."
+Discord: "&7Click the discord link to join: &9https://discord.gg/bruuZCG5Pk"
+
+OpenWarpMenu: "&7Opening the warp menu..."
+
+SaberThrow: "&7You threw your lightsaber!"
+SaberCooldown: "&cYou are too tired to throw a lightsaber, try again in &e{var} &cseconds!"
+
+BarrelEmpty: "&cThe barrel is empty."
+CanisterFill: "&cYour canister is full."
+
+KothStart: "&fKOTH event &e{var} &fhas started at {x}, {z}!"
+KothContest: "&fThe Koth &e{var} &fis being contested."
+KothCapturing: "&fFaction &e{var} &fis now capturing &e{var1}&f!"
+KothCapture: "&fFaction &e{var} &fhas captured &e{var1} &fthanks to player &e{var2}&f!"
+
+ChestHuntStart: "&7Crates have spawned across the &8&lDeath Star&r&7! Loot them before they disappear!"
+ChestHuntEnd: "&7Crate rush has ended!"
+
+BeskarMiningStart: "&7Raw Beskar have been spotted on &6&lConcordia &r&7around -24, 45!"
+BeskarMiningEnd: "&7The raw beskar has run out."
