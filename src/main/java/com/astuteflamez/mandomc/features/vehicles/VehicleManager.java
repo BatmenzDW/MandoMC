@@ -1,7 +1,9 @@
 package com.astuteflamez.mandomc.features.vehicles;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -19,16 +21,14 @@ public class VehicleManager {
     }
 
     public static void unregister(Player player) {
-        Vehicle vehicle = activeVehicles.get(player.getUniqueId());
-        vehicle.updateVisual();
-        activeVehicles.remove(player.getUniqueId());
+        Vehicle vehicle = activeVehicles.remove(player.getUniqueId());
     }
 
-    public static boolean isFlying(Player player) {
+    public static boolean isAlive(Player player) {
         return activeVehicles.containsKey(player.getUniqueId());
     }
 
     public static Map<UUID, Vehicle> getAll() {
-        return activeVehicles;
+        return Collections.unmodifiableMap(activeVehicles);
     }
 }

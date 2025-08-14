@@ -16,6 +16,7 @@ import com.astuteflamez.mandomc.features.events.rhydonium.*;
 import com.astuteflamez.mandomc.features.items.*;
 import com.astuteflamez.mandomc.features.sabers.*;
 import com.astuteflamez.mandomc.features.vehicles.*;
+import com.astuteflamez.mandomc.features.vehicles.listeners.*;
 import com.astuteflamez.mandomc.features.warps.WarpCommand;
 import com.astuteflamez.mandomc.features.warps.WarpConfig;
 import com.astuteflamez.mandomc.guis.GUIListener;
@@ -29,12 +30,12 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.comphenix.protocol.wrappers.WrappedServerPing;
 import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,8 +56,10 @@ public final class MandoMC extends JavaPlugin {
     public void onLoad() {
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
         PacketEvents.getAPI().load();
-        //PacketEvents.getAPI().getEventManager().registerListener(
-        //        new FlyingCartInputListener(), PacketListenerPriority.NORMAL);
+        PacketEvents.getAPI().getEventManager().registerListener(
+                new BoostListener(), PacketListenerPriority.NORMAL);
+        PacketEvents.getAPI().getEventManager().registerListener(
+                new InputListener(), PacketListenerPriority.NORMAL);
     }
 
     @Override
@@ -122,9 +125,12 @@ public final class MandoMC extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SpawnPvP(), this);
         new AmmoRecipes(this, itemsManager).registerAmmoRecipes();
 
-        getServer().getPluginManager().registerEvents(new VehicleSummonListener(guiManager), this);
-        getServer().getPluginManager().registerEvents(new VehicleCheckListener(), this);
-        BukkitTask vehicleTask = new VehicleRunnable(this).runTaskTimer(this, 0L, 1L);
+        getServer().getPluginManager().registerEvents(new EnterListener(guiManager), this);
+        getServer().getPluginManager().registerEvents(new ExitListener(), this);
+        getServer().getPluginManager().registerEvents(new SafetyListener(), this);
+        getServer().getPluginManager().registerEvents(new ShootListener(this), this);
+        getServer().getPluginManager().registerEvents(new SpawnListener(), this);
+        new VehicleRunnable().runTaskTimer(this, 0L, 1L);
 
         RandomEventScheduler.getInstance().start();
 
@@ -177,8 +183,9 @@ public final class MandoMC extends JavaPlugin {
         for(Player player : Bukkit.getOnlinePlayers()) {
             Vehicle vehicle = VehicleManager.get(player);
             if (vehicle != null) {
-                vehicle.getPhantom().remove();
+                vehicle.getEntity().remove();
                 vehicle.getZombie().remove();
+                vehicle.returnVehicle();
                 VehicleManager.unregister(player);
             }
         }
