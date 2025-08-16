@@ -1,7 +1,6 @@
 package com.astuteflamez.mandomc.features.vehicles;
 
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ public class VehicleManager {
     }
 
     public static void unregister(Player player) {
-        Vehicle vehicle = activeVehicles.remove(player.getUniqueId());
+        activeVehicles.remove(player.getUniqueId());
     }
 
     public static boolean isAlive(Player player) {

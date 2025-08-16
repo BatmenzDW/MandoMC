@@ -2,7 +2,6 @@ package com.astuteflamez.mandomc.features.vehicles.variants;
 
 import com.astuteflamez.mandomc.features.vehicles.Vehicle;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;

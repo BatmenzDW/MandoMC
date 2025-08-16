@@ -41,7 +41,7 @@ public class InputListener implements PacketListener {
         vehicle.setForwardInput(forwardAxis);
 
         // Ensure D=+1 (turn right), A=-1 (turn left). Flip sign if your impl differs.
-        double turnInput = -sidewaysAxis;
+        double turnInput = sidewaysAxis;
         vehicle.setTurnInput(turnInput);
 
         // Boost logic

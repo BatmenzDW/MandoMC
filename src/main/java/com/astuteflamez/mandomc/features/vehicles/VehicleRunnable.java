@@ -9,6 +9,7 @@ import org.bukkit.block.data.type.Slab;
 import org.bukkit.block.data.type.Snow;
 import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -113,7 +114,7 @@ public class VehicleRunnable extends BukkitRunnable {
                 continue;
             }
 
-            ensureCorrectVisibility(player, /*visible*/ false);
+            if(!vehicle.isHoverMode()) ensureCorrectVisibility(player, /*visible*/ false);
 
             Entity entity = vehicle.getEntity();
             Zombie zombie = vehicle.getZombie();
@@ -200,6 +201,9 @@ public class VehicleRunnable extends BukkitRunnable {
     // =======================
 
     private void tickAir(Vehicle vehicle, Player player, Entity entity, double speedMultiplier) {
+        LivingEntity livingEntity = (LivingEntity) entity;
+        livingEntity.setAI(true);
+
         int baseSpeed = Math.max(0, vehicle.getSpeed());
         entity.setGravity(false);
 
@@ -222,40 +226,68 @@ public class VehicleRunnable extends BukkitRunnable {
     // =======================
 
     private void tickGround(Vehicle vehicle, Player player, Entity entity, double speedMultiplier) {
-        // --- VISUAL ROTATION: smoothly steer the model toward player yaw ---
+        // --- ROTATION: use A/D (turnInput) for hover yaw ---
         float maxStep = ROTATION_SPEED_DEG;
         if (ICE_SLIPPERY && getBlockBelow(entity).getType().toString().contains("ICE")) maxStep *= 2f;
 
-        float currentYaw = entity.getLocation().getYaw();
-        float cameraYaw  = player.getLocation().getYaw();
-        float delta = shortestAngle(cameraYaw - currentYaw);
-        float step  = clampFloat(Math.abs(delta), 0f, maxStep) * Math.signum(delta);
-        float newYaw = wrapDegrees(currentYaw + step);
-        setEntityYawHard(entity, newYaw, entity.getLocation().getPitch());
-
-        // --- SPEED INTEGRATION ---
+        // scale turn at very low speeds so it doesn’t snap-spin when nearly stopped
         UUID id = player.getUniqueId();
         double curSpeed = groundSpeed.getOrDefault(id, 0.0);
+        float speedScale = (curSpeed < 0.1) ? (1f / ROTATION_SPEED_SLOW_DIV) : 1f;
+
+        // Clamp turn input to [-1,1] and convert to degrees-per-tick
+        double ti = vehicle.getTurnInput();
+        if (ti > 1) ti = 1; else if (ti < -1) ti = -1;
+        float appliedDeg = (float)(maxStep * speedScale * ti);
+
+        float currentYaw = entity.getLocation().getYaw();
+        float newYaw = wrapDegrees(currentYaw + appliedDeg);
+
+        // Write the yaw robustly (keeps rider)
+        setEntityYawHard(entity, newYaw, entity.getLocation().getPitch());
+
+        // --- SPEED INTEGRATION (unchanged) ---
         curSpeed = advanceSpeed(curSpeed, vehicle.getForwardInput(), vehicle.isBraking(), getBlockBelow(entity).getType());
         groundSpeed.put(id, curSpeed);
 
-        // --- STEP LOGIC ---
+        // --- STEP LOGIC (unchanged) ---
         boolean movedUp = stepCheckAndAdjust(entity);
 
-        // --- VELOCITY: always use camera yaw so steering works even if body yaw lags ---
-        Vector vel = composeGroundVelocityFacingYaw(cameraYaw, entity, curSpeed * speedMultiplier, movedUp);
+        // --- VELOCITY: drive by the entity’s facing (not camera yaw) ---
+        Vector vel = composeGroundVelocityFromEntityFacing(entity, curSpeed * speedMultiplier, movedUp);
 
-        // Honey slowdown
+        // Honey slowdown (unchanged)
         if (HONEY_SLOWDOWN && getBlockBelow(entity).getType() == Material.HONEY_BLOCK) {
             vel.multiply(0.2);
             if (vel.clone().setY(0).length() < 0.05) {
-                Vector dir = dirFromYaw(cameraYaw);
+                Vector dir = entity.getLocation().getDirection().setY(0);
+                if (dir.lengthSquared() > 0) dir.normalize();
                 vel.setX(dir.getX() * 0.05);
                 vel.setZ(dir.getZ() * 0.05);
             }
         }
 
         entity.setVelocity(vel);
+    }
+
+    private Vector composeGroundVelocityFromEntityFacing(Entity entity, double speed, boolean movedUp) {
+        Location loc = entity.getLocation();
+        Vector dir = loc.getDirection().clone();
+        dir.setY(0);
+        if (dir.lengthSquared() == 0) dir.zero(); else dir.normalize();
+
+        Vector xz = dir.multiply(speed);
+
+        Material below = getBlockBelow(entity).getType();
+        double y;
+        if (isPassable(below)) {
+            y = below.toString().contains("WATER") ? +0.01 : FALL_FAST_Y;
+        } else {
+            y = FLOAT_ON_GROUND_Y;
+        }
+
+        if (movedUp) y = Math.min(y, 0.0);
+        return new Vector(xz.getX(), y, xz.getZ());
     }
 
     private double advanceSpeed(double current, double forward, boolean braking, Material blockBelow) {

@@ -45,7 +45,7 @@ public final class VehicleFactory {
             z.setGravity(false);
             z.setShouldBurnInDay(false);
             z.stopDrowning();
-            z.setInvisible(false);
+            z.setInvisible(true);
             if (z.getEquipment() != null) {
                 z.getEquipment().setHelmet(helmetItem);
                 z.getEquipment().setHelmetDropChance(0.0f);
@@ -75,7 +75,7 @@ public final class VehicleFactory {
             p.setAI(false);
             p.setGravity(false);
             p.setSize(1);
-            p.setInvisible(false);
+            p.setInvisible(true);
             p.setShouldBurnInDay(false);
             if (p.getAttribute(Attribute.GENERIC_SCALE) != null) {
                 p.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(3.0); // larger visual
