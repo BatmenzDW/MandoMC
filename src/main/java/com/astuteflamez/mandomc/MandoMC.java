@@ -144,6 +144,7 @@ public final class MandoMC extends JavaPlugin {
         // ✅ Register commands
         getCommand("mmcreload").setExecutor(new ReloadCommand(this));
         getCommand("discord").setExecutor(new DiscordCommand());
+        getCommand("quests").setExecutor(new QuestCommand());
 
         // ✅ Register listeners
         getServer().getPluginManager().registerEvents(new GlobalRestrictions(this), this);
@@ -220,5 +221,10 @@ public final class MandoMC extends JavaPlugin {
     public static String color(String text) {
         if (text == null) return "";
         return ChatColor.translateAlternateColorCodes('&', text);
+    }
+
+    public static String str(String string){
+        if (string == null) return "";
+        return ChatColor.translateAlternateColorCodes('&', string);
     }
 }

@@ -29,7 +29,7 @@ public class PlayerQuestsTable extends Database {
         connection.close();
     }
 
-    public static void playerStartQuest(String uuid, String questName, Timestamp expirationDateTime) throws SQLException {
+    public static void playerStartQuest(String uuid, String questName) throws SQLException {
         Connection connection = getConnection();
 
         PreparedStatement statement = connection.prepareStatement("INSERT INTO PlayerQuests(uuid, QuestName, Progress) VALUES(?,?,?)");

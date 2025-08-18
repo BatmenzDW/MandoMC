@@ -23,6 +23,21 @@ public class Quest {
         QuestName = questName;
     }
 
+    public Quest(String questName, String questDesc, String trigger, String parent) {
+        QuestName = questName;
+        QuestDesc = questDesc;
+        Parent = parent;
+        QuestTrigger = trigger;
+    }
+
+    public Quest(String questName, String questDesc, String trigger, Timestamp expirationDateTime, String parent) {
+        QuestName = questName;
+        QuestDesc = questDesc;
+        Expiration = expirationDateTime;
+        Parent = parent;
+        QuestTrigger = trigger;
+    }
+
     public String getQuestName() {
         return QuestName;
     }
