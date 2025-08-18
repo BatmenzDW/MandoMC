@@ -1,6 +1,10 @@
 package com.astuteflamez.mandomc;
 
 import com.astuteflamez.mandomc.commands.*;
+import com.astuteflamez.mandomc.database.EventRewardsTable;
+import com.astuteflamez.mandomc.database.ItemRewardsTable;
+import com.astuteflamez.mandomc.database.PlayerQuestsTable;
+import com.astuteflamez.mandomc.database.QuestsTable;
 import com.astuteflamez.mandomc.features.blasters.AmmoRecipes;
 import com.astuteflamez.mandomc.features.blasters.SpawnPvP;
 import com.astuteflamez.mandomc.features.events.EventsConfig;
@@ -37,6 +41,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -134,6 +139,8 @@ public final class MandoMC extends JavaPlugin {
 
         RandomEventScheduler.getInstance().start();
 
+        initializeDatabase();
+
         // ✅ Register commands
         getCommand("mmcreload").setExecutor(new ReloadCommand(this));
         getCommand("discord").setExecutor(new DiscordCommand());
@@ -188,6 +195,17 @@ public final class MandoMC extends JavaPlugin {
                 vehicle.returnVehicle();
                 VehicleManager.unregister(player);
             }
+        }
+    }
+
+    public void initializeDatabase(){
+        try {
+            PlayerQuestsTable.initializePlayerQuestsTable();
+            QuestsTable.initializeQuestsTable();
+            ItemRewardsTable.initializeItemRewardsTable();
+            EventRewardsTable.initializeEventRewardsTable();
+        } catch (SQLException e) {
+            getServer().getConsoleSender().sendMessage("[MandoMC]: Database initialization failed: " + e.getMessage());
         }
     }
 

@@ -1,6 +1,15 @@
 # ================================
 # ⚙️ MandoMC Global Settings
 # ================================
+
+# =================
+# Database Options
+# =================
+
+DatabaseURL: ""
+DatabaseUSER: ""
+DatabasePASSWORD: ""
+
 # These options control world behavior, gameplay restrictions, and mob activity.
 
 # ================================
