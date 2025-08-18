@@ -34,14 +34,6 @@ public class RewardItem extends QuestReward{
         this.itemStack = itemBytes;
     }
 
-    public int getPoolId() {
-        return poolId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
     public byte[] getItemStackBytes(){
         return itemStack;
     }

@@ -4,10 +4,8 @@ import java.util.UUID;
 
 public class RewardEvent extends QuestReward {
 
-    private int id;
     private String eventName;
     private String metaData;
-    private int poolId;
 
     public RewardEvent(int id, String eventName, String metaData, int poolId) {
         this.id = id;
@@ -18,6 +16,6 @@ public class RewardEvent extends QuestReward {
 
     @Override
     public void givePlayer(UUID uuid) {
-
+        // TODO: add givePlayer RewardEvent code
     }
 }

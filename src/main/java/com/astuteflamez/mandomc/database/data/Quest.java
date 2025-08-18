@@ -6,14 +6,14 @@ public class Quest {
     private String QuestName;
     private String QuestDesc;
     private String Parent;
-    private Timestamp ExpirationDateTime;
+    private Timestamp Expiration;
     private String QuestTrigger;
     private Integer RewardsPool;
 
     public Quest(String questName, String questDesc, Timestamp expirationDateTime, String trigger, Integer rewardsPool, String parent) {
         QuestName = questName;
         QuestDesc = questDesc;
-        ExpirationDateTime = expirationDateTime;
+        Expiration = expirationDateTime;
         Parent = parent;
         QuestTrigger = trigger;
         RewardsPool = rewardsPool;
@@ -39,20 +39,21 @@ public class Quest {
         QuestDesc = questDesc;
     }
 
-    public Timestamp getQuestExpirationDateTime(){
-        return ExpirationDateTime;
-    }
-
-    public void setQuestExpirationDateTime(Timestamp expirationDateTime) {
-        ExpirationDateTime = expirationDateTime;
-    }
-
     public String getParent() {
         return Parent;
     }
 
     public void setParent(String parent) {
         Parent = parent;
+    }
+
+    public Timestamp getExpiration()
+    {
+        return Expiration;
+    }
+
+    public void setExpiration(Timestamp expiration){
+        Expiration = expiration;
     }
 
     public String getQuestTrigger() {return QuestTrigger;}
