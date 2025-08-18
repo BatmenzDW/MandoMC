@@ -21,3 +21,5 @@ ChestHuntEnd: "&7Crate rush has ended!"
 
 BeskarMiningStart: "&7Raw Beskar have been spotted on &6&lConcordia &r&7around -24, 45!"
 BeskarMiningEnd: "&7The raw beskar has run out."
+
+DateFormat: "Date should be formatted as yyyy-mm-dd or yyyy-mm-dd hh:mm:ss."
