@@ -79,10 +79,6 @@
             <id>codemc-snapshots</id>
             <url>https://repo.codemc.io/repository/maven-snapshots/</url>
         </repository>
-        <repository>
-            <id>jeff-media</id>
-            <url>https://repo.jeff-media.com/public</url>
-        </repository>
     </repositories>
 
     <dependencies>
