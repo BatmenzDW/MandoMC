@@ -8,11 +8,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,9 +22,10 @@ import static com.astuteflamez.mandomc.MandoMC.color;
 public class QuestCommand implements CommandExecutor, TabCompleter {
     public QuestCommand() {}
 
+    private static final FileConfiguration config = LangConfig.get();
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        FileConfiguration config = LangConfig.get();
         String prefix = color(config.getString("Prefix"));
         String noPermission = color(config.getString("NoPermission"));
 
@@ -67,6 +68,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                             weight = Integer.parseInt(args[6]);
 
                             QuestsTable.addQuest(new Quest(quest, desc, trigger, parent, weight));
+                            outputString(sender, config.getString("commands.quests.create.static.created"));
                             break;
                         }
 
@@ -74,6 +76,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         parent = args[6];
 
                         QuestsTable.addQuest(new Quest(quest, desc, trigger, duration, parent, weight));
+                        outputString(sender, String.format(config.getString("commands.quests.create.timed.created"), arg4));
                     }
                     else if (args.length > 7) {
                         String durationStr = args[4];
@@ -88,6 +91,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         }
 
                         QuestsTable.addQuest(new Quest(quest, desc, trigger, duration, parent, weight));
+                        outputString(sender, String.format(config.getString("commands.quests.create.timed.created"), durationStr));
                     }
                     else {
                         return false;
@@ -106,7 +110,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                             List<QuestReward> rewards = QuestsTable.getQuestRewards(q.getQuestName());
                             output.append(q.getDisplayString(rewards)).append("\n");
                         }
-                        OutputString(sender, output.toString());
+                        outputString(sender, output.toString());
                     }
                     else {
                         Player target;
@@ -133,7 +137,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                             output.append(quest1.getDisplayString(rewards, q.getQuestProgress())).append("\n");
                         }
 
-                        OutputString(sender, output.toString());
+                        outputString(sender, output.toString());
                     }
                     break;
                 case "delete":
@@ -142,6 +146,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         break;
                     }
                     QuestsTable.removeQuest(quest);
+                    outputString(sender, String.format(config.getString("commands.quests.delete.deleted"), quest));
                     break;
                 case "give":
                     if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
@@ -151,6 +156,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     String targetNameG = args[2];
 
                     PlayerQuestsTable.playerStartQuest(Bukkit.getPlayer(targetNameG).getUniqueId().toString(), quest);
+                    outputString(sender, String.format(config.getString("commands.quests.give.given"), targetNameG, quest));
                     break;
                 case "take":
                     if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
@@ -160,6 +166,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     String targetNameT = args[2];
 
                     PlayerQuestsTable.removePlayerQuest(Bukkit.getPlayer(targetNameT).getUniqueId().toString(), quest);
+                    outputString(sender, String.format(config.getString("commands.quests.give.given"), targetNameT, quest));
                     break;
                 case "update":
                     if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
@@ -170,22 +177,71 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     String progress = args[3];
 
                     PlayerQuestsTable.updateQuestProgress(Bukkit.getPlayer(targetNameU).getUniqueId().toString(), quest, Float.parseFloat(progress));
+                    outputString(sender, String.format(config.getString("commands.quests.update.updated"), targetNameU, quest, Float.parseFloat(progress) * 100.0));
                     break;
                 case "rewards":
+                    if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
+                        player.sendMessage(prefix + noPermission);
+                        break;
+                    }
                     String action2 = args[2];
+                    Quest quest1 = QuestsTable.getQuest(quest);
+//                    List<QuestReward> rewards = QuestsTable.getQuestRewards(quest1.getQuestName());
 
-                    // TODO: finish rewards command
                     switch (action2){
                         case "add":
                         {
+                            String rewardType = args[3];
+                            switch (rewardType) {
+                                case "item":
+                                {
+                                    ItemStack item;
+                                    if (args.length > 4){
+                                        String itemArgs = args[4];
+                                        item = Bukkit.getItemFactory().createItemStack(itemArgs);
+                                    }
+                                    else if (sender instanceof Player player) {
+                                        item = player.getInventory().getItemInMainHand();
+                                    }
+                                    else {
+                                        outputString(sender, config.getString("commands.quests.rewards.add.item.none"));
+                                        return false;
+                                    }
+                                    ItemRewardsTable.addItemReward(quest1.getRewardsPool(), item);
+                                    outputString(sender, String.format(config.getString("commands.quests.rewards.add.item.added"), item, quest));
+                                    break;
+                                }
+                                case "event":
+                                {
+                                    outputString(sender, "No events are implemented yet, plz contact dev.");
+                                    break;
+                                }
+                            }
                             break;
                         }
                         case "remove":
                         {
+                            String rewardType = args[3];
+                            int rewardId = Integer.parseInt(args[4]);
+                            switch (rewardType){
+                                case "item":
+                                {
+                                    ItemRewardsTable.removeItemReward(quest1.getRewardsPool(), rewardId);
+                                    outputString(sender, String.format(config.getString("commands.quests.rewards.remove.item.removed"), rewardId, quest));
+                                    break;
+                                }
+                                case "event":
+                                {
+                                    outputString(sender, "No events are implemented yet, plz contact dev.");
+                                    break;
+                                }
+                            }
                             break;
                         }
                         case "clear":
                         {
+                            QuestsTable.clearRewardPool(quest1.getRewardsPool());
+                            outputString(sender, String.format(config.getString("commands.quests.rewards.clear.cleared"), quest));
                             break;
                         }
                     }
@@ -193,35 +249,33 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     break;
                 case "help":
                     StringBuilder help = new StringBuilder();
-                    help.append(config.getString("commands.quests.list.user.command")).append("\n");
-                    help.append("\t").append(config.getString("commands.quests.list.user.description")).append("\n");
+                    help.append(commandHelp("commands.quests.list.user"));
 
                     if ((sender instanceof Player player && player.hasPermission("mmc.quests.manage")) || !(sender instanceof Player)) {
-                        help.append(config.getString("commands.quests.list.target.command")).append("\n");
-                        help.append("\t").append(config.getString("commands.quests.list.target.description")).append("\n");
-
-                        help.append(config.getString("commands.quests.list.all")).append("\n");
-                        help.append("\t").append(config.getString("commands.quests.list.all.description")).append("\n");
-
-                        help.append(config.getString("commands.quests.create.static.command")).append("\n");
-                        help.append("\t").append(config.getString("commands.quests.create.static.description")).append("\n");
-
-                        help.append(config.getString("commands.quests.create.timed.command")).append("\n");
-                        help.append("\t").append(config.getString("commands.quests.create.timed.description")).append("\n");
+                        help.append(commandHelp("commands.quests.list.target"));
+                        help.append(commandHelp("commands.quests.list.all"));
+                        help.append(commandHelp("commands.quests.create.static"));
+                        help.append(commandHelp("commands.quests.create.timed"));
+                        help.append(commandHelp("commands.quests.delete"));
+                        help.append(commandHelp("commands.quests.give"));
+                        help.append(commandHelp("commands.quests.take"));
+                        help.append(commandHelp("commands.quests.update"));
+                        help.append(commandHelp("commands.quests.rewards.add.item"));
+                        help.append(commandHelp("commands.quests.rewards.remove.item"));
+                        help.append(commandHelp("commands.quests.rewards.clear"));
 
                         // TODO: finish help text
                     }
-                    help.append(config.getString("commands.quests.help.command")).append("\n");
-                    help.append("\t").append(config.getString("commands.quests.help.description")).append("\n");
+                    help.append(commandHelp("commands.quests.help"));
 
-                    OutputString(sender, help.toString());
+                    outputString(sender, help.toString());
                     break;
             }
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (java.lang.IllegalArgumentException e){
-            OutputString(sender, LangConfig.get().getString("DateFormat"));
+            outputString(sender, LangConfig.get().getString("DateFormat"));
         }
 
         return false;
@@ -279,12 +333,16 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
         return completions;
     }
 
-    private static void OutputString(@NotNull CommandSender sender, String output) {
+    private static void outputString(@NotNull CommandSender sender, String output) {
         if (sender instanceof Player player) {
             player.sendMessage(output);
         }
         else {
             Bukkit.getConsoleSender().sendMessage(output);
         }
+    }
+
+    private static String commandHelp(String commandKey){
+        return config.getString(commandKey + ".command") + "\n\t" + config.getString(commandKey + ".description") + "\n";
     }
 }

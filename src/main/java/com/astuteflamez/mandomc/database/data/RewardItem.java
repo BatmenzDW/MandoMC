@@ -14,8 +14,6 @@ import java.util.UUID;
 
 public class RewardItem extends QuestReward{
 
-    private final int poolId;
-    private final int id;
     private final byte[] itemStack;
 
     public RewardItem(int poolId, int id, ItemStack item) {

@@ -2,7 +2,6 @@ package com.astuteflamez.mandomc.database;
 
 import com.astuteflamez.mandomc.database.data.RewardEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.inventory.EventStack;
 
 import java.sql.*;
 import java.util.ArrayList;

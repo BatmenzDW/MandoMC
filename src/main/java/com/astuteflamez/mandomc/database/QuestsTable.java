@@ -33,6 +33,17 @@ public class QuestsTable extends Database {
     public static void addQuest(Quest quest) throws SQLException {
         Connection connection = getConnection();
 
+        Statement statement0 = connection.createStatement();
+        String sql = "SELECT MAX(RewardPool) FROM quests";
+        ResultSet resultSet = statement0.executeQuery(sql);
+
+        int pool = -1;
+        if (resultSet.next()) {
+            pool = resultSet.getInt(1);
+        }
+        resultSet.close();
+        statement0.close();
+
         PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO quests " +
                         "(QuestName, Description, QuestTrigger, RewardPool, Parent, " +
@@ -41,7 +52,7 @@ public class QuestsTable extends Database {
         statement.setString(1, quest.getQuestName());
         statement.setString(2, quest.getQuestDesc());
         statement.setString(3, quest.getQuestTrigger());
-        statement.setInt(4, quest.getRewardsPool());
+        statement.setInt(4, pool);
         statement.setString(5, quest.getParent());
         statement.setInt(6, quest.getDuration().ordinal());
         statement.setTimestamp(7, quest.getExpiration());
@@ -321,6 +332,23 @@ public class QuestsTable extends Database {
 
         statement.executeUpdate();
         statement.close();
+        connection.close();
+    }
+
+    public static void clearRewardPool(int poolId) throws SQLException {
+        Connection connection = getConnection();
+
+        PreparedStatement statement1 = connection.prepareStatement("DELETE FROM questItemRewards WHERE PoolId = ?");
+        statement1.setInt(1, poolId);
+
+        statement1.executeUpdate();
+        statement1.close();
+
+        PreparedStatement statement2 = connection.prepareStatement("DELETE FROM questEventRewards WHERE PoolId = ?");
+        statement2.setInt(1, poolId);
+
+        statement2.executeUpdate();
+        statement2.close();
         connection.close();
     }
 }
