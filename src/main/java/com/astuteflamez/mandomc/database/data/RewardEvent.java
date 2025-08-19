@@ -18,4 +18,9 @@ public class RewardEvent extends QuestReward {
     public void givePlayer(UUID uuid) {
         // TODO: add givePlayer RewardEvent code
     }
+
+    @Override
+    public String getRewardDescription() {
+        return eventName;
+    }
 }

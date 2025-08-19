@@ -79,10 +79,6 @@
             <id>codemc-snapshots</id>
             <url>https://repo.codemc.io/repository/maven-snapshots/</url>
         </repository>
-        <repository>
-            <id>jeff-media</id>
-            <url>https://repo.jeff-media.com/public</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -133,19 +129,18 @@
             <artifactId>mechanicscore</artifactId>
             <version>4.1.0</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.jeff_media</groupId>
+                    <artifactId>SpigotUpdateChecker</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
             <version>7.0.9</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jeff_media</groupId>
-            <artifactId>SpigotUpdateChecker</artifactId>
-            <version>3.0.4</version>
             <scope>provided</scope>
         </dependency>
 

@@ -43,6 +43,15 @@ mobs:
   disable-natural-phantoms: true
 
 # ================================
+# ❗ Quest Settings
+# ================================
+quests:
+  daily:
+    number: 3
+  weekly:
+    number: 3
+
+# ================================
 # 🌸 Aesthetics
 # ================================
 

@@ -222,9 +222,4 @@ public final class MandoMC extends JavaPlugin {
         if (text == null) return "";
         return ChatColor.translateAlternateColorCodes('&', text);
     }
-
-    public static String str(String string){
-        if (string == null) return "";
-        return ChatColor.translateAlternateColorCodes('&', string);
-    }
 }

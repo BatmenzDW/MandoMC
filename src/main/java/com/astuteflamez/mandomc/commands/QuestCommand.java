@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.astuteflamez.mandomc.MandoMC.str;
+import static com.astuteflamez.mandomc.MandoMC.color;
 
 public class QuestCommand implements CommandExecutor, TabCompleter {
     public QuestCommand() {}
@@ -25,8 +25,8 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         FileConfiguration config = LangConfig.get();
-        String prefix = str(config.getString("Prefix"));
-        String noPermission = str(config.getString("NoPermission"));
+        String prefix = color(config.getString("Prefix"));
+        String noPermission = color(config.getString("NoPermission"));
 
         String action = args[0].toLowerCase();
         String quest = args[1];
@@ -39,7 +39,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         break;
                     }
                     String desc = args[2];
-                    Timestamp timestamp = null;
+                    Quest.DurationEnum duration = Quest.DurationEnum.NONE;
                     String trigger = null;
                     String parent = null;
                     if (args.length == 6) {
@@ -49,22 +49,20 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         QuestsTable.addQuest(new Quest(quest, desc, trigger, parent));
                     }
                     else if (args.length > 6) {
-                        String dTString = args[4];
+                        String durationStr = args[4];
                         trigger = args[5];
                         parent = args[6];
 
-                        dTString = dTString.trim();
-                        int space = dTString.indexOf(' ');
-                        if (space < 0){
-                            dTString += " 00:00:00";
+                        if (durationStr.equalsIgnoreCase("daily")) {
+                            duration = Quest.DurationEnum.DAILY;
+                        } else if (durationStr.equalsIgnoreCase("weekly")) {
+                            duration = Quest.DurationEnum.WEEKLY;
                         }
 
-                        timestamp = Timestamp.valueOf(dTString);
-
-                        QuestsTable.addQuest(new Quest(quest, desc, trigger, timestamp, parent));
+                        QuestsTable.addQuest(new Quest(quest, desc, trigger, duration, parent));
                     }
-
                     break;
+
                 case "list":
                     if (Objects.equals(args[1].toLowerCase(), "all")) {
                         if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
@@ -178,13 +176,15 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     }
                     break;
                 }
-                try {
-                    List<Quest> quests = QuestsTable.getAllQuests();
-                    for (Quest q: quests){
-                        completions.add(q.getQuestName());
+                else if (!args[0].equalsIgnoreCase("create")) {
+                    try {
+                        List<Quest> quests = QuestsTable.getAllQuests();
+                        for (Quest q : quests) {
+                            completions.add(q.getQuestName());
+                        }
+                    } catch (SQLException e) {
+                        throw new CommandException(e.getMessage());
                     }
-                } catch (SQLException e) {
-                    throw new CommandException(e.getMessage());
                 }
                 break;
             case 2:

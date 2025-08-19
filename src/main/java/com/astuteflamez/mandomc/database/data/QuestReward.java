@@ -21,4 +21,8 @@ public abstract class QuestReward {
     public int getId() {
         return id;
     }
+
+    public String getRewardDescription() {
+        return "None";
+    }
 }

@@ -1,9 +1,8 @@
 package com.astuteflamez.mandomc.database.data;
 
-import io.lumine.mythic.bukkit.adapters.BukkitItemStack;
-import io.lumine.mythic.bukkit.utils.shadows.nbt.NBTTagCompound;
-import io.lumine.mythic.core.utils.jnbt.CompoundTag;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 
@@ -74,6 +73,11 @@ public class RewardItem extends QuestReward{
 
     public String toString(){
         return "id: " + id + "; item:" + getItemStack();
+    }
+
+    @Override
+    public String getRewardDescription() {
+        return getItemStack() + "";
     }
 
     @Override

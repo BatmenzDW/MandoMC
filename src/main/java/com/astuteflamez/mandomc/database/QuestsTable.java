@@ -12,7 +12,14 @@ public class QuestsTable extends Database {
         Connection connection = getConnection();
 
         Statement statement = connection.createStatement();
-        String sql = "CREATE TABLE IF NOT EXISTS quests(QuestName varchar(64) primary key, Description text, QuestTrigger varchar(64), RewardPool int, Parent varchar(64), Expiration TIMESTAMP)";
+        String sql = "CREATE TABLE IF NOT EXISTS quests(" +
+                "QuestName varchar(64) primary key, " +
+                "Description text, QuestTrigger varchar(64), " +
+                "RewardPool int, " +
+                "Parent varchar(64), " +
+                "DurationEnum int NOT NULL DEFAULT '0', " +
+                "Expiration TIMESTAMP NULL, " +
+                "Weight int NOT NULL DEFAULT '1')";
 
         statement.executeUpdate(sql);
 
@@ -26,13 +33,18 @@ public class QuestsTable extends Database {
     public static void addQuest(Quest quest) throws SQLException {
         Connection connection = getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO quests (QuestName, Description, QuestTrigger, RewardPool, Parent, Expiration) VALUES (?, ?, ?, ?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO quests " +
+                        "(QuestName, Description, QuestTrigger, RewardPool, Parent, " +
+                        "DurationEnum, Expiration) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)");
         statement.setString(1, quest.getQuestName());
         statement.setString(2, quest.getQuestDesc());
         statement.setString(3, quest.getQuestTrigger());
         statement.setInt(4, quest.getRewardsPool());
         statement.setString(5, quest.getParent());
-        statement.setTimestamp(6, quest.getExpiration());
+        statement.setInt(6, quest.getDuration().ordinal());
+        statement.setTimestamp(7, quest.getExpiration());
 
         statement.executeUpdate();
 
@@ -61,7 +73,10 @@ public class QuestsTable extends Database {
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
-            Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"), resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"), resultSet.getInt("RewardPool"), resultSet.getString("Parent"));
+            Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
+                    resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
+                    resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
+                    resultSet.getInt("Duration"));
 
             statement.close();
             connection.close();
@@ -81,7 +96,154 @@ public class QuestsTable extends Database {
         ResultSet resultSet = statement.executeQuery();
         ArrayList<Quest> quests = new ArrayList<>();
         while (resultSet.next()) {
-            Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"), resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"), resultSet.getInt("RewardPool"), resultSet.getString("Parent"));
+            Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
+                    resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
+                    resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
+                    resultSet.getInt("Duration"));
+            quests.add(quest);
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+        return quests;
+    }
+
+    public static List<Quest> getDailyQuests() throws SQLException {
+        Connection connection = getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM quests WHERE DurationEnum = 1");
+
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Quest> quests = new ArrayList<>();
+        while (resultSet.next()) {
+            Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
+                    resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
+                    resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
+                    resultSet.getInt("Duration"));
+            quests.add(quest);
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+        return quests;
+    }
+
+    public static List<Quest> getWeightedDailyQuests() throws SQLException {
+        Connection connection = getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM quests WHERE DurationEnum = 1");
+
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Quest> quests = new ArrayList<>();
+        while (resultSet.next()) {
+            Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
+                    resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
+                    resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
+                    resultSet.getInt("Duration"), resultSet.getInt("Weight"));
+            quests.add(quest);
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        ArrayList<Quest> weightedQuests = new ArrayList<>();
+        for (Quest quest : quests) {
+            int weight = quest.getWeight();
+            for (int i = 0; i < weight; i++){
+                weightedQuests.add(quest);
+            }
+        }
+
+        return weightedQuests;
+    }
+
+    public static List<Quest> getWeeklyQuests() throws SQLException {
+        Connection connection = getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM quests WHERE DurationEnum = 2");
+
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Quest> quests = new ArrayList<>();
+        while (resultSet.next()) {
+            Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
+                    resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
+                    resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
+                    resultSet.getInt("Duration"));
+            quests.add(quest);
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        ArrayList<Quest> weightedQuests = new ArrayList<>();
+        for (Quest quest : quests) {
+            int weight = quest.getWeight();
+            for (int i = 0; i < weight; i++){
+                weightedQuests.add(quest);
+            }
+        }
+
+        return weightedQuests;
+    }
+
+    public static List<Quest> getWeightedWeeklyQuests() throws SQLException {
+        Connection connection = getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM quests WHERE DurationEnum = 2");
+
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Quest> quests = new ArrayList<>();
+        while (resultSet.next()) {
+            Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
+                    resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
+                    resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
+                    resultSet.getInt("Duration"), resultSet.getInt("Weight"));
+            quests.add(quest);
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+        return quests;
+    }
+
+    public static List<Quest> getActiveWeeklyQuests() throws SQLException {
+        Connection connection = getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM quests WHERE DurationEnum = 2 AND Expiration < CURRENT_TIMESTAMP");
+
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Quest> quests = new ArrayList<>();
+        while (resultSet.next()) {
+            Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
+                    resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
+                    resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
+                    resultSet.getInt("Duration"));
+            quests.add(quest);
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+        return quests;
+    }
+
+    public static List<Quest> getStaticQuests() throws SQLException {
+        Connection connection = getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM quests WHERE DurationEnum = 0");
+
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Quest> quests = new ArrayList<>();
+        while (resultSet.next()) {
+            Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
+                    resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
+                    resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
+                    resultSet.getInt("Duration"));
             quests.add(quest);
         }
 
@@ -99,7 +261,10 @@ public class QuestsTable extends Database {
         ResultSet resultSet = statement.executeQuery();
         ArrayList<Quest> quests = new ArrayList<>();
         while (resultSet.next()) {
-            Quest child = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"), resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"), resultSet.getInt("RewardPool"), resultSet.getString("Parent"));
+            Quest child = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
+                    resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
+                    resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
+                    resultSet.getInt("Duration"));
             quests.add(child);
         }
 
