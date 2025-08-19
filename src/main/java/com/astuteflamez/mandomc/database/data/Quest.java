@@ -38,20 +38,22 @@ public class Quest {
         QuestName = questName;
     }
 
-    public Quest(String questName, String questDesc, String trigger, String parent) {
+    public Quest(String questName, String questDesc, String trigger, String parent, int weight) {
         QuestName = questName;
         QuestDesc = questDesc;
         Parent = parent;
         QuestTrigger = trigger;
         Duration = DurationEnum.NONE;
+        Weight = weight;
     }
 
-    public Quest(String questName, String questDesc, String trigger, DurationEnum duration, String parent) {
+    public Quest(String questName, String questDesc, String trigger, DurationEnum duration, String parent, int weight) {
         QuestName = questName;
         QuestDesc = questDesc;
         Duration = duration;
         Parent = parent;
         QuestTrigger = trigger;
+        Weight = weight;
     }
 
     public String getQuestName() {

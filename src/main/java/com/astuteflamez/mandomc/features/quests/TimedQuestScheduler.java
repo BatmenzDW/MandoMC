@@ -102,11 +102,11 @@ public class TimedQuestScheduler {
             return;
         }
 
-        int dailyQuestsCount = MandoMC.getInstance().getConfig().getInt("quests.weekly.number");
+        int weeklyQuestsCount = MandoMC.getInstance().getConfig().getInt("quests.weekly.number");
 
         List<Quest> weeklyQuests = new ArrayList<>();
         try {
-            for (int i = 0; i < dailyQuestsCount; i++) {
+            for (int i = 0; i < weeklyQuestsCount; i++) {
                 Quest selected = weeklyQuestPool.get(random.nextInt(weeklyQuestPool.size()));
 
                 // TODO: Add checks to make sure quests are valid weekly quests

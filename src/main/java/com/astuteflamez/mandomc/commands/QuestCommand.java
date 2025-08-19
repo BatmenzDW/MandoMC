@@ -42,16 +42,41 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     Quest.DurationEnum duration = Quest.DurationEnum.NONE;
                     String trigger = null;
                     String parent = null;
-                    if (args.length == 6) {
+                    int weight = 1;
+                    if (args.length == 6){
                         trigger = args[4];
                         parent = args[5];
 
-                        QuestsTable.addQuest(new Quest(quest, desc, trigger, parent));
+                        QuestsTable.addQuest(new Quest(quest, desc, trigger, parent, weight));
                     }
-                    else if (args.length > 6) {
+                    else if (args.length == 7) {
+                        var arg4 = args[4];
+
+                        if (arg4.equalsIgnoreCase("daily")) {
+                            duration = Quest.DurationEnum.DAILY;
+                        }
+                        else if (arg4.equalsIgnoreCase("weekly")) {
+                            duration = Quest.DurationEnum.WEEKLY;
+                        }
+                        else {
+                            trigger = args[4];
+                            parent = args[5];
+                            weight = Integer.parseInt(args[6]);
+
+                            QuestsTable.addQuest(new Quest(quest, desc, trigger, parent, weight));
+                            break;
+                        }
+
+                        trigger = args[5];
+                        parent = args[6];
+
+                        QuestsTable.addQuest(new Quest(quest, desc, trigger, duration, parent, weight));
+                    }
+                    else if (args.length > 7) {
                         String durationStr = args[4];
                         trigger = args[5];
                         parent = args[6];
+                        weight = Integer.parseInt(args[7]);
 
                         if (durationStr.equalsIgnoreCase("daily")) {
                             duration = Quest.DurationEnum.DAILY;
@@ -59,7 +84,10 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                             duration = Quest.DurationEnum.WEEKLY;
                         }
 
-                        QuestsTable.addQuest(new Quest(quest, desc, trigger, duration, parent));
+                        QuestsTable.addQuest(new Quest(quest, desc, trigger, duration, parent, weight));
+                    }
+                    else {
+                        return false;
                     }
                     break;
 
