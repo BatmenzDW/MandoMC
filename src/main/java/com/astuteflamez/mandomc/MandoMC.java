@@ -27,6 +27,7 @@ import com.astuteflamez.mandomc.features.warps.WarpConfig;
 import com.astuteflamez.mandomc.guis.GUIListener;
 import com.astuteflamez.mandomc.guis.GUIManager;
 import com.astuteflamez.mandomc.listeners.GlobalRestrictions;
+import com.astuteflamez.mandomc.listeners.PlayerJoinListener;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.ListenerPriority;
@@ -151,6 +152,7 @@ public final class MandoMC extends JavaPlugin {
 
         // ✅ Register listeners
         getServer().getPluginManager().registerEvents(new GlobalRestrictions(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
 
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Status.Server.SERVER_INFO) {
             @Override

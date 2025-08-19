@@ -115,3 +115,11 @@ commands:
         "Sets player's progress on quest to progress * 100 %."
       updated:
         "Set %s's progress on %s to %f%%."
+
+quests:
+  tutorial:
+    1:
+      name:
+        "Tutorial 1"
+      start:
+        "Started Tutorial 1"

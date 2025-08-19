@@ -131,6 +131,48 @@ public class PlayerQuestsTable extends Database {
         }
     }
 
+    public static List<PlayerQuest> getActiveQuests(String uuid) throws SQLException {
+        Connection connection = getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM PlayerQuests WHERE uuid = ? ORDER BY Progress DESC");
+        statement.setString(1, uuid);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        List<PlayerQuest> quests = new ArrayList<>();
+        if (resultSet.next()) {
+            PlayerQuest quest = new PlayerQuest(UUID.fromString(uuid), resultSet.getString("QuestName"), resultSet.getFloat("Progress"));
+            quests.add(quest);
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        return quests;
+    }
+
+    public static List<PlayerQuest> getInactiveTimedQuests(String uuid) throws SQLException {
+        Connection connection = getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT q.QuestName as QuestName FROM quests as q LEFT JOIN playerQuests as p ON p.QuestName = q.QuestName WHERE (p.uuid IS NULL OR p.uuid != ?) AND q.Expiration > 1755625095000");
+        statement.setString(1, uuid);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        List<PlayerQuest> quests = new ArrayList<>();
+        if (resultSet.next()) {
+            PlayerQuest quest = new PlayerQuest(UUID.fromString(uuid), resultSet.getString("QuestName"), 0.0f);
+            quests.add(quest);
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        return quests;
+    }
+
     public static List<PlayerQuest> getInProgressQuests(String uuid) throws SQLException {
         Connection connection = getConnection();
 
