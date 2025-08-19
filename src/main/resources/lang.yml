@@ -23,3 +23,38 @@ BeskarMiningStart: "&7Raw Beskar have been spotted on &6&lConcordia &r&7around -
 BeskarMiningEnd: "&7The raw beskar has run out."
 
 DateFormat: "Date should be formatted as yyyy-mm-dd or yyyy-mm-dd hh:mm:ss."
+
+commands:
+  quests:
+    help:
+      command:
+        "quests help"
+      description:
+        "Shows this."
+    list:
+      user:
+        command:
+          "quests list"
+        description:
+          "Lists your active quests."
+      target:
+        command:
+          "quests list [target]"
+        description:
+          "Lists the target's active quests."
+      all:
+        command:
+          "quests list all"
+        description:
+          "Lists all quests."
+    create:
+      static:
+        command:
+          "quests create [name] [description] [trigger] [parent] <weight>"
+        description:
+          "Creates a quest."
+      timed:
+        command:
+          "quests create [name] [description] [daily | weekly] [trigger] [parent] <weight>"
+        description:
+          "Creates a daily or weekly quest with <weight> chances to be chosen."

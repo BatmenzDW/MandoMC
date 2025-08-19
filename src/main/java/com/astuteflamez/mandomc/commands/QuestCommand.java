@@ -29,7 +29,10 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
         String noPermission = color(config.getString("NoPermission"));
 
         String action = args[0].toLowerCase();
-        String quest = args[1];
+        String quest = "";
+        if (args.length != 1){
+            quest = args[1];
+        }
         try {
             switch (action) {
                 case "create":
@@ -100,7 +103,8 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         StringBuilder output = new StringBuilder();
                         List<Quest> quests = QuestsTable.getAllQuests();
                         for (Quest q : quests) {
-                            output.append(q.getQuestName()).append("\n");
+                            List<QuestReward> rewards = QuestsTable.getQuestRewards(q.getQuestName());
+                            output.append(q.getDisplayString(rewards)).append("\n");
                         }
                         OutputString(sender, output.toString());
                     }
@@ -124,10 +128,9 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         StringBuilder output = new StringBuilder();
                         List<PlayerQuest> quests = PlayerQuestsTable.getInProgressQuests(target.getUniqueId().toString());
                         for (PlayerQuest q : quests) {
-                            output.append(q.getQuestName()).append(": ").append(String.format("%.0f",q.getQuestProgress() * 100)).append("%\n");
-
                             Quest quest1 = QuestsTable.getQuest(q.getQuestName());
-                            output.append("\t").append(quest1.getQuestDesc());
+                            List<QuestReward> rewards = QuestsTable.getQuestRewards(q.getQuestName());
+                            output.append(quest1.getDisplayString(rewards, q.getQuestProgress())).append("\n");
                         }
 
                         OutputString(sender, output.toString());
@@ -168,7 +171,53 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
 
                     PlayerQuestsTable.updateQuestProgress(Bukkit.getPlayer(targetNameU).getUniqueId().toString(), quest, Float.parseFloat(progress));
                     break;
+                case "rewards":
+                    String action2 = args[2];
+
+                    // TODO: finish rewards command
+                    switch (action2){
+                        case "add":
+                        {
+                            break;
+                        }
+                        case "remove":
+                        {
+                            break;
+                        }
+                        case "clear":
+                        {
+                            break;
+                        }
+                    }
+
+                    break;
+                case "help":
+                    StringBuilder help = new StringBuilder();
+                    help.append(config.getString("commands.quests.list.user.command")).append("\n");
+                    help.append("\t").append(config.getString("commands.quests.list.user.description")).append("\n");
+
+                    if ((sender instanceof Player player && player.hasPermission("mmc.quests.manage")) || !(sender instanceof Player)) {
+                        help.append(config.getString("commands.quests.list.target.command")).append("\n");
+                        help.append("\t").append(config.getString("commands.quests.list.target.description")).append("\n");
+
+                        help.append(config.getString("commands.quests.list.all")).append("\n");
+                        help.append("\t").append(config.getString("commands.quests.list.all.description")).append("\n");
+
+                        help.append(config.getString("commands.quests.create.static.command")).append("\n");
+                        help.append("\t").append(config.getString("commands.quests.create.static.description")).append("\n");
+
+                        help.append(config.getString("commands.quests.create.timed.command")).append("\n");
+                        help.append("\t").append(config.getString("commands.quests.create.timed.description")).append("\n");
+
+                        // TODO: finish help text
+                    }
+                    help.append(config.getString("commands.quests.help.command")).append("\n");
+                    help.append("\t").append(config.getString("commands.quests.help.description")).append("\n");
+
+                    OutputString(sender, help.toString());
+                    break;
             }
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (java.lang.IllegalArgumentException e){

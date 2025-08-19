@@ -18,6 +18,7 @@ import com.astuteflamez.mandomc.features.events.koth.KothCommand;
 import com.astuteflamez.mandomc.features.events.koth.KothManager;
 import com.astuteflamez.mandomc.features.events.rhydonium.*;
 import com.astuteflamez.mandomc.features.items.*;
+import com.astuteflamez.mandomc.features.quests.TimedQuestScheduler;
 import com.astuteflamez.mandomc.features.sabers.*;
 import com.astuteflamez.mandomc.features.vehicles.*;
 import com.astuteflamez.mandomc.features.vehicles.listeners.*;
@@ -42,6 +43,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -138,6 +140,7 @@ public final class MandoMC extends JavaPlugin {
         new VehicleRunnable().runTaskTimer(this, 0L, 1L);
 
         RandomEventScheduler.getInstance().start();
+        TimedQuestScheduler.getInstance().start();
 
         initializeDatabase();
 

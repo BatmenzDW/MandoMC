@@ -34,6 +34,13 @@ public class TimedQuestScheduler {
         return instance;
     }
 
+    public void start(){
+        chooseDailyQuests(LocalDateTime.now().toLocalDate().atStartOfDay().plusDays(1));
+
+        Calendar cal = getNextWeek();
+        chooseWeeklyQuests(LocalDateTime.ofInstant(cal.toInstant(), cal.getTimeZone().toZoneId()).toLocalDate().atStartOfDay());
+    }
+
     public void chooseDailyQuests(LocalDateTime tomorrow){
         try {
             dailyQuestPool = QuestsTable.getWeightedDailyQuests();
@@ -150,13 +157,8 @@ public class TimedQuestScheduler {
     }
 
     private void scheduleNewWeeklyQuests() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
-        cal.clear(Calendar.MINUTE);
-        cal.clear(Calendar.SECOND);
-        cal.clear(Calendar.MILLISECOND);
+        Calendar cal = getNextWeek();
 
-        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
 
         long delayMinutes = Duration.between(LocalDateTime.now(), cal.toInstant()).toMinutes();
 
@@ -168,5 +170,17 @@ public class TimedQuestScheduler {
                 chooseWeeklyQuests(LocalDateTime.ofInstant(cal.toInstant(), cal.getTimeZone().toZoneId()).toLocalDate().atStartOfDay());
             }
         }.runTaskLater(MandoMC.getInstance(), delayTicks);
+    }
+
+    private static Calendar getNextWeek() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+        cal.clear(Calendar.MINUTE);
+        cal.clear(Calendar.SECOND);
+        cal.clear(Calendar.MILLISECOND);
+
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+
+        return cal;
     }
 }
