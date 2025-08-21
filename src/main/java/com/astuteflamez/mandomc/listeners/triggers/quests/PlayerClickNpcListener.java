@@ -13,8 +13,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import java.util.List;
 import java.util.Set;
 
-import static java.lang.StringTemplate.STR;
-
 public class PlayerClickNpcListener extends QuestTrigger {
 
     public PlayerClickNpcListener() {}
@@ -41,11 +39,11 @@ public class PlayerClickNpcListener extends QuestTrigger {
             Set<String> npcs = npcConfig.getKeys(false);
 
             for (String npc : npcs) {
-                String customName = npcConfig.getString(STR."\{npc}.custom-name");
+                String customName = npcConfig.getString(npc + ".custom-name");
                 if (!npc.equals(customName)) continue;
 
-                String trigger = npcConfig.getString(STR."\{npc}.quest.trigger");
-                float amount = (float) npcConfig.getDouble(STR."\{npc}.quest.amount");
+                String trigger = npcConfig.getString(npc + ".quest.trigger");
+                float amount = (float) npcConfig.getDouble(npc + "quest.amount");
                 triggerQuests(player, trigger, amount);
             }
         }
@@ -54,7 +52,7 @@ public class PlayerClickNpcListener extends QuestTrigger {
     private void triggerQuests(Player player, String trigger, float amount){
         List<PlayerQuest> quests = getTriggeredQuests(player, trigger);
 
-        Bukkit.getLogger().info(STR."\{player.getName()} triggered \{trigger} for amount \{amount}.");
+        Bukkit.getLogger().info(player.getName() + " triggered " + trigger + " for amount" + amount);
         for (PlayerQuest quest : quests){
             quest.setQuestProgress(quest.getQuestProgress() + amount);
         }
