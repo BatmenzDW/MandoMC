@@ -13,10 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static com.astuteflamez.mandomc.MandoMC.color;
 
@@ -39,34 +36,34 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
         }
         try {
             switch (action) {
-                case "create":
+                case "create": {
                     if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
 
                         player.sendMessage(prefix + noPermission);
                         break;
                     }
-                    if (args.length < 3) return false;
+                    if (args.length < 3) {
+                        badCommandHelp(sender, action);
+                        break;
+                    }
                     String desc = args[2];
                     Quest.DurationEnum duration = Quest.DurationEnum.NONE;
                     String trigger;
                     String parent;
                     int weight = 1;
-                    if (args.length == 6){
+                    if (args.length == 6) {
                         trigger = args[4];
                         parent = args[5];
 
                         QuestsTable.addQuest(new Quest(quest, desc, trigger, parent, weight));
-                    }
-                    else if (args.length == 7) {
+                    } else if (args.length == 7) {
                         var arg4 = args[4];
 
                         if (arg4.equalsIgnoreCase("daily")) {
                             duration = Quest.DurationEnum.DAILY;
-                        }
-                        else if (arg4.equalsIgnoreCase("weekly")) {
+                        } else if (arg4.equalsIgnoreCase("weekly")) {
                             duration = Quest.DurationEnum.WEEKLY;
-                        }
-                        else {
+                        } else {
                             trigger = args[4];
                             parent = args[5];
                             weight = Integer.parseInt(args[6]);
@@ -80,9 +77,8 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         parent = args[6];
 
                         QuestsTable.addQuest(new Quest(quest, desc, trigger, duration, parent, weight));
-                        outputString(sender, String.format(config.getString("commands.quests.create.timed.created" ,""), arg4));
-                    }
-                    else if (args.length > 7) {
+                        outputString(sender, String.format(config.getString("commands.quests.create.timed.created", ""), arg4));
+                    } else if (args.length > 7) {
                         String durationStr = args[4];
                         trigger = args[5];
                         parent = args[6];
@@ -96,19 +92,17 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
 
                         QuestsTable.addQuest(new Quest(quest, desc, trigger, duration, parent, weight));
                         outputString(sender, String.format(config.getString("commands.quests.create.timed.created", ""), durationStr));
-                    }
-                    else {
+                    } else {
                         return false;
                     }
                     break;
-
-                case "list":
-                    if (args.length == 1){
+                }
+                case "list": {
+                    if (args.length == 1) {
                         Player target;
                         if (sender instanceof Player player) {
                             target = player;
-                        }
-                        else {
+                        } else {
                             throw new CommandException("No Player Specified");
                         }
 
@@ -122,8 +116,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         }
 
                         outputString(sender, output.toString());
-                    }
-                    else if (Objects.equals(args[1].toLowerCase(), "all")) {
+                    } else if (Objects.equals(args[1].toLowerCase(), "all")) {
                         if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
                             player.sendMessage(prefix + noPermission);
                             break;
@@ -135,8 +128,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                             output.append(q.getDisplayString(rewards)).append("\n");
                         }
                         outputString(sender, output.toString());
-                    }
-                    else {
+                    } else {
                         Player target;
                         if (args.length == 2) {
                             if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
@@ -144,12 +136,10 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                                 break;
                             }
                             target = Bukkit.getPlayer(args[1]);
-                        }
-                        else {
+                        } else {
                             if (sender instanceof Player player) {
                                 target = player;
-                            }
-                            else {
+                            } else {
                                 throw new CommandException("No Player Specified");
                             }
                         }
@@ -166,17 +156,27 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         outputString(sender, output.toString());
                     }
                     break;
-                case "delete":
+                }
+                case "delete": {
                     if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
                         player.sendMessage(prefix + noPermission);
+                        break;
+                    }
+                    if (args.length == 1) {
+                        badCommandHelp(sender, action);
                         break;
                     }
                     QuestsTable.removeQuest(quest);
                     outputString(sender, String.format(config.getString("commands.quests.delete.deleted", ""), quest));
                     break;
-                case "give":
+                }
+                case "give": {
                     if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
                         player.sendMessage(prefix + noPermission);
+                        break;
+                    }
+                    if (args.length < 3) {
+                        badCommandHelp(sender, action);
                         break;
                     }
                     String targetNameG = args[2];
@@ -185,9 +185,14 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     PlayerQuestsTable.playerStartQuest(target.getUniqueId().toString(), quest);
                     outputString(sender, String.format(config.getString("commands.quests.give.given", ""), targetNameG, quest));
                     break;
-                case "take":
+                }
+                case "take": {
                     if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
                         player.sendMessage(prefix + noPermission);
+                        break;
+                    }
+                    if (args.length < 3) {
+                        badCommandHelp(sender, action);
                         break;
                     }
                     String targetNameT = args[2];
@@ -196,9 +201,14 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     PlayerQuestsTable.removePlayerQuest(targetT.getUniqueId().toString(), quest);
                     outputString(sender, String.format(config.getString("commands.quests.give.given", ""), targetNameT, quest));
                     break;
-                case "update":
+                }
+                case "update": {
                     if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
                         player.sendMessage(prefix + noPermission);
+                        break;
+                    }
+                    if (args.length < 4) {
+                        badCommandHelp(sender, action);
                         break;
                     }
                     String targetNameU = args[2];
@@ -208,9 +218,14 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     PlayerQuestsTable.updateQuestProgress(targetU.getUniqueId().toString(), quest, Float.parseFloat(progress));
                     outputString(sender, String.format(config.getString("commands.quests.update.updated", ""), targetNameU, quest, Float.parseFloat(progress) * 100.0));
                     break;
-                case "rewards":
+                }
+                case "rewards": {
                     if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
                         player.sendMessage(prefix + noPermission);
+                        break;
+                    }
+                    if (args.length < 3) {
+                        badCommandHelp(sender, action);
                         break;
                     }
                     String action2 = args[2];
@@ -218,22 +233,22 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
 //                    List<QuestReward> rewards = QuestsTable.getQuestRewards(quest1.getQuestName());
 
                     if (quest1 == null) break;
-                    switch (action2){
-                        case "add":
-                        {
+                    switch (action2) {
+                        case "add": {
+                            if (args.length < 4) {
+                                badCommandHelp(sender, action);
+                                break;
+                            }
                             String rewardType = args[3];
                             switch (rewardType) {
-                                case "item":
-                                {
+                                case "item": {
                                     ItemStack item;
-                                    if (args.length > 4){
+                                    if (args.length > 4) {
                                         String itemArgs = args[4];
                                         item = Bukkit.getItemFactory().createItemStack(itemArgs);
-                                    }
-                                    else if (sender instanceof Player player) {
+                                    } else if (sender instanceof Player player) {
                                         item = player.getInventory().getItemInMainHand();
-                                    }
-                                    else {
+                                    } else {
                                         outputString(sender, config.getString("commands.quests.rewards.add.item.none"));
                                         return false;
                                     }
@@ -241,35 +256,34 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                                     outputString(sender, String.format(config.getString("commands.quests.rewards.add.item.added", ""), item, quest));
                                     break;
                                 }
-                                case "event":
-                                {
+                                case "event": {
                                     outputString(sender, "No events are implemented yet, plz contact dev.");
                                     break;
                                 }
                             }
                             break;
                         }
-                        case "remove":
-                        {
+                        case "remove": {
+                            if (args.length < 4) {
+                                badCommandHelp(sender, action);
+                                break;
+                            }
                             String rewardType = args[3];
                             int rewardId = Integer.parseInt(args[4]);
-                            switch (rewardType){
-                                case "item":
-                                {
+                            switch (rewardType) {
+                                case "item": {
                                     ItemRewardsTable.removeItemReward(quest1.getRewardsPool(), rewardId);
                                     outputString(sender, String.format(config.getString("commands.quests.rewards.remove.item.removed", ""), rewardId, quest));
                                     break;
                                 }
-                                case "event":
-                                {
+                                case "event": {
                                     outputString(sender, "No events are implemented yet, plz contact dev.");
                                     break;
                                 }
                             }
                             break;
                         }
-                        case "clear":
-                        {
+                        case "clear": {
                             QuestsTable.clearRewardPool(quest1.getRewardsPool());
                             outputString(sender, String.format(config.getString("commands.quests.rewards.clear.cleared", ""), quest));
                             break;
@@ -277,6 +291,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     }
 
                     break;
+                }
                 case "help":
                     StringBuilder help = new StringBuilder();
                     help.append(commandHelp("commands.quests.list.user"));
@@ -322,7 +337,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
             switch (args.length - 1) {
                 case 0:
                     completions.add("list");
-                    if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
+                    if (sender instanceof Player player && player.hasPermission("mmc.quests.manage")) {
                         completions.add("create");
                         completions.add("delete");
                         completions.add("list");
@@ -365,7 +380,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
         } catch (CommandException e) {
             outputString(sender, e.getStackTrace()[0].toString());
         } catch (Exception e) {
-            outputString(sender, e.getStackTrace()[0].toString());
+            outputString(sender, Arrays.toString(e.getStackTrace()));
         }
         return completions;
     }
@@ -381,6 +396,35 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
 
     private static String commandHelp(String commandKey){
         FileConfiguration config = LangConfig.get();
-        return "\n" + config.getString(commandKey+ ".command") + "\n   " + config.getString(commandKey + ".description");
+        return "\n/" + config.getString(commandKey+ ".command", "InvalidKey") + "\n   §7" + config.getString(commandKey + ".description", "InvalidKey");
+    }
+
+    private static void badCommandHelp(@NotNull CommandSender sender, String commandKey) {
+        StringBuilder help = new StringBuilder();
+
+        switch (commandKey) {
+            case "create": {
+                help.append(commandHelp("commands.quests.create.static"));
+                help.append(commandHelp("commands.quests.create.timed"));
+                break;
+            }
+            case "list": {
+                help.append(commandHelp("commands.quests.list.target"));
+                help.append(commandHelp("commands.quests.list.all"));
+                break;
+            }
+            case "rewards": {
+                help.append(commandHelp("commands.quests.rewards.add.item"));
+                help.append(commandHelp("commands.quests.rewards.remove"));
+                help.append(commandHelp("commands.quests.rewards.clear"));
+                break;
+            }
+            default: {
+                help.append(commandHelp("commands.quests." + commandKey));
+                break;
+            }
+        }
+
+        outputString(sender, help.toString());
     }
 }
