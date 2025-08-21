@@ -21,3 +21,105 @@ ChestHuntEnd: "&7Crate rush has ended!"
 
 BeskarMiningStart: "&7Raw Beskar have been spotted on &6&lConcordia &r&7around -24, 45!"
 BeskarMiningEnd: "&7The raw beskar has run out."
+
+DateFormat: "Date should be formatted as yyyy-mm-dd or yyyy-mm-dd hh:mm:ss."
+
+commands:
+  quests:
+    help:
+      command:
+        "quests help"
+      description:
+        "Shows this."
+    list:
+      user:
+        command:
+          "quests list"
+        description:
+          "Lists your active quests."
+      target:
+        command:
+          "quests list <target>"
+        description:
+          "Lists the target's active quests."
+      all:
+        command:
+          "quests list all"
+        description:
+          "Lists all quests."
+    create:
+      static:
+        command:
+          "quests create <name> <description> <trigger> <parent> [weight]"
+        description:
+          "Creates a quest."
+        created:
+          "Quest created."
+      timed:
+        command:
+          "quests create <name> <description> (daily | weekly) <trigger> <parent> [weight]"
+        description:
+          "Creates a daily or weekly quest with <weight> chances to be chosen."
+        created:
+          "%S quest created."
+    rewards:
+      add:
+        item:
+          command:
+            "quests rewards <questName> add item [item name & metadata]"
+          description:
+            ""
+          none:
+            "Please provide an item name or hold the item you want to add."
+          added:
+            "Added %s to rewards pool for %s."
+      remove:
+        command:
+          "quests rewards <questName> remove item <rewardId>"
+        description:
+          ""
+        removed:
+          "Reward %d removed from rewards pool for %s."
+      clear:
+        command:
+          "quests rewards <questName> clear"
+        description:
+          ""
+        cleared:
+          "Cleared rewards pool for %s."
+    delete:
+      command:
+        "quests delete <questName>"
+      description:
+        "Deletes a quest."
+      deleted:
+        "%S deleted."
+    give:
+      command:
+        "quests give <questName> <player>"
+      description:
+        "Give player a quest."
+      given:
+        "%s started %s."
+    take:
+      command:
+        "quests take <questName> <player>"
+      description:
+        "Removes a quest and its progress from player."
+      taken:
+        "Removed %s's %s progress."
+    update:
+      command:
+        "quests update <questName> <player> <progress>"
+      description:
+        "Sets player's progress on quest to progress * 100 %."
+      updated:
+        "Set %s's progress on %s to %f%%."
+
+quests:
+  tutorial:
+    1:
+      name:
+        "Tutorial 1"
+      start:
+        "Started Tutorial 1"

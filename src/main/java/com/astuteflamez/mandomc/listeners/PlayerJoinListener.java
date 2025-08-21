@@ -53,6 +53,6 @@ public class PlayerJoinListener implements Listener {
 
         PlayerQuestsTable.playerStartQuest(player.getUniqueId().toString(), questName);
 
-        player.sendMessage(LangConfig.get().getString("quests.tutorial."));
+        player.sendMessage(LangConfig.get().getString("quests.tutorial.1.start"));
     }
 }

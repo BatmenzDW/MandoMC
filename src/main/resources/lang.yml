@@ -39,7 +39,7 @@ commands:
           "Lists your active quests."
       target:
         command:
-          "quests list [target]"
+          "quests list <target>"
         description:
           "Lists the target's active quests."
       all:
@@ -50,14 +50,14 @@ commands:
     create:
       static:
         command:
-          "quests create [name] [description] [trigger] [parent] <weight>"
+          "quests create <name> <description> <trigger> <parent> [weight]"
         description:
           "Creates a quest."
         created:
           "Quest created."
       timed:
         command:
-          "quests create [name] [description] [daily | weekly] [trigger] [parent] <weight>"
+          "quests create <name> <description> (daily | weekly) <trigger> <parent> [weight]"
         description:
           "Creates a daily or weekly quest with <weight> chances to be chosen."
         created:
@@ -66,7 +66,7 @@ commands:
       add:
         item:
           command:
-            "quests rewards [questName] add item <item name & metadata>"
+            "quests rewards <questName> add item [item name & metadata]"
           description:
             ""
           none:
@@ -75,42 +75,42 @@ commands:
             "Added %s to rewards pool for %s."
       remove:
         command:
-          "quests rewards [questName] remove item [rewardId]"
+          "quests rewards <questName> remove item <rewardId>"
         description:
           ""
         removed:
           "Reward %d removed from rewards pool for %s."
       clear:
         command:
-          "quests rewards [questName] clear"
+          "quests rewards <questName> clear"
         description:
           ""
         cleared:
           "Cleared rewards pool for %s."
     delete:
       command:
-        "quests delete [questName]"
+        "quests delete <questName>"
       description:
         "Deletes a quest."
       deleted:
         "%S deleted."
     give:
       command:
-        "quests give [questName] [player]"
+        "quests give <questName> <player>"
       description:
         "Give player a quest."
       given:
         "%s started %s."
     take:
       command:
-        "quests take [questName] [player]"
+        "quests take <questName> <player>"
       description:
         "Removes a quest and its progress from player."
       taken:
         "Removed %s's %s progress."
     update:
       command:
-        "quests update [questName] [player] [progress]"
+        "quests update <questName> <player> <progress>"
       description:
         "Sets player's progress on quest to progress * 100 %."
       updated:

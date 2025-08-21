@@ -34,5 +34,11 @@ commands:
     aliases: [ chevent, chunt ]
   oreevent:
     description: Start/stop ore event and get wand
+  quests:
+    description: Quests command. For more info, use /quests help
   rhydonium:
   discord:
+
+permissions:
+  mmc.quests.manage:
+    description: Gives the ability to add/remove/modify quests and relevant data.

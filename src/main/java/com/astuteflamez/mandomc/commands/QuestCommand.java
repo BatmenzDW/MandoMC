@@ -261,7 +261,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         help.append(commandHelp("commands.quests.take"));
                         help.append(commandHelp("commands.quests.update"));
                         help.append(commandHelp("commands.quests.rewards.add.item"));
-                        help.append(commandHelp("commands.quests.rewards.remove.item"));
+                        help.append(commandHelp("commands.quests.rewards.remove"));
                         help.append(commandHelp("commands.quests.rewards.clear"));
 
                         // TODO: finish help text
@@ -285,50 +285,55 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         ArrayList<String> completions = new ArrayList<>();
-        switch (args.length){
-            case 0:
-                completions.add("list");
-                if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")){
-                    completions.add("create");
-                    completions.add("delete");
+        try {
+            switch (args.length) {
+                case 0:
                     completions.add("list");
-                    completions.add("give");
-                    completions.add("take");
-                    completions.add("update");
-                }
-                break;
-            case 1:
-                if (args[0].equalsIgnoreCase("list")) {
-                    if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) break;
-                    completions.add("all");
-                    ArrayList<Player> players = (ArrayList<Player>) Bukkit.getOnlinePlayers();
-                    for (Player p: players){
-                        completions.add(p.getName());
+                    if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
+                        completions.add("create");
+                        completions.add("delete");
+                        completions.add("list");
+                        completions.add("give");
+                        completions.add("take");
+                        completions.add("update");
                     }
                     break;
-                }
-                else if (!args[0].equalsIgnoreCase("create")) {
-                    try {
-                        List<Quest> quests = QuestsTable.getAllQuests();
-                        for (Quest q : quests) {
-                            completions.add(q.getQuestName());
-                        }
-                    } catch (SQLException e) {
-                        throw new CommandException(e.getMessage());
-                    }
-                }
-                break;
-            case 2:
-                switch (args[0].toLowerCase()){
-                    case "give":
-                    case "take":
-                    case "update":
+                case 1:
+                    if (args[0].equalsIgnoreCase("list")) {
+                        if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) break;
+                        completions.add("all");
                         ArrayList<Player> players = (ArrayList<Player>) Bukkit.getOnlinePlayers();
-                        for (Player p: players){
+                        for (Player p : players) {
                             completions.add(p.getName());
                         }
                         break;
-                }
+                    } else if (!args[0].equalsIgnoreCase("create")) {
+                        try {
+                            List<Quest> quests = QuestsTable.getAllQuests();
+                            for (Quest q : quests) {
+                                completions.add(q.getQuestName());
+                            }
+                        } catch (SQLException e) {
+                            throw new CommandException(e.getMessage());
+                        }
+                    }
+                    break;
+                case 2:
+                    switch (args[0].toLowerCase()) {
+                        case "give":
+                        case "take":
+                        case "update":
+                            ArrayList<Player> players = (ArrayList<Player>) Bukkit.getOnlinePlayers();
+                            for (Player p : players) {
+                                completions.add(p.getName());
+                            }
+                            break;
+                    }
+            }
+        } catch (CommandException e) {
+            outputString(sender, e.getMessage());
+        } catch (Exception e) {
+            outputString(sender, e.getMessage());
         }
         return completions;
     }
@@ -344,6 +349,6 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
 
     private static String commandHelp(String commandKey){
         FileConfiguration config = LangConfig.get();
-        return config.getString(commandKey + ".command") + "\n\t" + config.getString(commandKey + ".description") + "\n";
+        return config.getString(commandKey + ".command") + "\n   " + config.getString(commandKey + ".description") + "\n";
     }
 }

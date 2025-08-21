@@ -35,7 +35,7 @@ commands:
   oreevent:
     description: Start/stop ore event and get wand
   quests:
-    description: Quests.
+    description: Quests command. For more info, use /quests help
   rhydonium:
   discord:
 
