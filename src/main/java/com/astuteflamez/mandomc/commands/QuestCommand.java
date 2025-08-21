@@ -38,7 +38,6 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
             switch (action) {
                 case "create": {
                     if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
-
                         player.sendMessage(prefix + noPermission);
                         break;
                     }
@@ -56,7 +55,9 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         parent = args[5];
 
                         QuestsTable.addQuest(new Quest(quest, desc, trigger, parent, weight));
-                    } else if (args.length == 7) {
+                        outputString(sender, config.getString("commands.quests.create.static.created"));
+                    }
+                    else if (args.length == 7) {
                         var arg4 = args[4];
 
                         if (arg4.equalsIgnoreCase("daily")) {
@@ -78,7 +79,8 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
 
                         QuestsTable.addQuest(new Quest(quest, desc, trigger, duration, parent, weight));
                         outputString(sender, String.format(config.getString("commands.quests.create.timed.created", ""), arg4));
-                    } else if (args.length > 7) {
+                    }
+                    else if (args.length > 7) {
                         String durationStr = args[4];
                         trigger = args[5];
                         parent = args[6];
@@ -116,19 +118,30 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         }
 
                         outputString(sender, output.toString());
-                    } else if (Objects.equals(args[1].toLowerCase(), "all")) {
+                    }
+                    else if (Objects.equals(args[1].toLowerCase(), "all")) {
                         if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
                             player.sendMessage(prefix + noPermission);
                             break;
                         }
                         StringBuilder output = new StringBuilder();
-                        List<Quest> quests = QuestsTable.getAllQuests();
-                        for (Quest q : quests) {
-                            List<QuestReward> rewards = QuestsTable.getQuestRewards(q.getQuestName());
-                            output.append(q.getDisplayString(rewards)).append("\n");
+                        List<Quest> quests;
+                        try {
+                            quests = QuestsTable.getAllQuests();
+
+                            for (Quest q : quests) {
+                                List<QuestReward> rewards = QuestsTable.getQuestRewards(q.getQuestName());
+                                output.append(q.getDisplayString(rewards)).append("\n");
+                            }
+                            outputString(sender, output.toString());
                         }
-                        outputString(sender, output.toString());
-                    } else {
+                        catch (SQLException e) {
+                            outputString(sender, "SQL Error from QuestTable.getAllQuests.");
+                            outputString(sender, e.getMessage());
+                            outputString(sender, e.getStackTrace()[0].toString());
+                        }
+                    }
+                    else {
                         Player target;
                         if (args.length == 2) {
                             if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
@@ -318,10 +331,12 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
             }
             return true;
         } catch (SQLException e) {
+            outputString(sender, e.getMessage());
             outputString(sender, e.getStackTrace()[0].toString());
         } catch (java.lang.IllegalArgumentException e){
             outputString(sender, LangConfig.get().getString("DateFormat"));
         } catch (Exception e){
+            outputString(sender, e.getMessage());
             outputString(sender, e.getStackTrace()[0].toString());
         }
 
@@ -362,6 +377,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                                 completions.add(q.getQuestName());
                             }
                         } catch (SQLException e) {
+                            outputString(sender, e.getMessage());
                             throw new CommandException(e.getMessage());
                         }
                     }
@@ -377,7 +393,10 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                             break;
                     }
             }
-        } catch (CommandException e) {
+
+        }
+        catch (CommandException e) {
+            outputString(sender, e.getMessage());
             outputString(sender, e.getStackTrace()[0].toString());
         } catch (Exception e) {
             outputString(sender, Arrays.toString(e.getStackTrace()));
@@ -396,7 +415,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
 
     private static String commandHelp(String commandKey){
         FileConfiguration config = LangConfig.get();
-        return "\n/" + config.getString(commandKey+ ".command", "InvalidKey") + "\n   §7" + config.getString(commandKey + ".description", "InvalidKey");
+        return "\n/" + config.getString(commandKey+ ".command", "InvalidKey") + "\n   §7" + config.getString(commandKey + ".description", "InvalidKey") + "§r";
     }
 
     private static void badCommandHelp(@NotNull CommandSender sender, String commandKey) {

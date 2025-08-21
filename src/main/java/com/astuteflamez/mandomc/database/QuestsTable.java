@@ -87,7 +87,7 @@ public class QuestsTable extends Database {
             Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
                     resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
                     resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
-                    resultSet.getInt("Duration"));
+                    resultSet.getInt("DurationEnum"));
 
             statement.close();
             connection.close();
@@ -110,7 +110,7 @@ public class QuestsTable extends Database {
             Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
                     resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
                     resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
-                    resultSet.getInt("Duration"));
+                    resultSet.getInt("DurationEnum"));
             quests.add(quest);
         }
 
@@ -131,7 +131,7 @@ public class QuestsTable extends Database {
             Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
                     resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
                     resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
-                    resultSet.getInt("Duration"));
+                    resultSet.getInt("DurationEnum"));
             quests.add(quest);
         }
 
@@ -152,7 +152,7 @@ public class QuestsTable extends Database {
             Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
                     resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
                     resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
-                    resultSet.getInt("Duration"), resultSet.getInt("Weight"));
+                    resultSet.getInt("DurationEnum"), resultSet.getInt("Weight"));
             quests.add(quest);
         }
 
@@ -182,7 +182,7 @@ public class QuestsTable extends Database {
             Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
                     resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
                     resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
-                    resultSet.getInt("Duration"));
+                    resultSet.getInt("DurationEnum"));
             quests.add(quest);
         }
 
@@ -212,7 +212,7 @@ public class QuestsTable extends Database {
             Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
                     resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
                     resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
-                    resultSet.getInt("Duration"), resultSet.getInt("Weight"));
+                    resultSet.getInt("DurationEnum"), resultSet.getInt("Weight"));
             quests.add(quest);
         }
 
@@ -233,7 +233,7 @@ public class QuestsTable extends Database {
             Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
                     resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
                     resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
-                    resultSet.getInt("Duration"));
+                    resultSet.getInt("DurationEnum"));
             quests.add(quest);
         }
 
@@ -254,7 +254,7 @@ public class QuestsTable extends Database {
             Quest quest = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
                     resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
                     resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
-                    resultSet.getInt("Duration"));
+                    resultSet.getInt("DurationEnum"));
             quests.add(quest);
         }
 
@@ -275,7 +275,7 @@ public class QuestsTable extends Database {
             Quest child = new Quest(resultSet.getString("QuestName"), resultSet.getString("Description"),
                     resultSet.getTimestamp("Expiration"), resultSet.getString("QuestTrigger"),
                     resultSet.getInt("RewardPool"), resultSet.getString("Parent"),
-                    resultSet.getInt("Duration"));
+                    resultSet.getInt("DurationEnum"));
             quests.add(child);
         }
 
