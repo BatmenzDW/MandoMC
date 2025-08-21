@@ -22,10 +22,10 @@ import static com.astuteflamez.mandomc.MandoMC.color;
 public class QuestCommand implements CommandExecutor, TabCompleter {
     public QuestCommand() {}
 
-    private static final FileConfiguration config = LangConfig.get();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        FileConfiguration config = LangConfig.get();
         String prefix = color(config.getString("Prefix"));
         String noPermission = color(config.getString("NoPermission"));
 
@@ -343,6 +343,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
     }
 
     private static String commandHelp(String commandKey){
+        FileConfiguration config = LangConfig.get();
         return config.getString(commandKey + ".command") + "\n\t" + config.getString(commandKey + ".description") + "\n";
     }
 }

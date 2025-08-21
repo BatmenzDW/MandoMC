@@ -51,6 +51,15 @@ quests:
   weekly:
     number: 3
 
+quest-npcs:
+  reg-shop:
+    custom-name:
+      "{\"text\":\"Reg Shop\",\"strikethrough\":false,\"obfuscated\":false,\"bold\":true,\"italic\":false,\"underlined\":false,\"color\":\"gold\"}"
+    quest:
+      trigger:
+        "open_reg_shop"
+      amount:
+        1.0
 # ================================
 # 🌸 Aesthetics
 # ================================

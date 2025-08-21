@@ -1,22 +1,25 @@
 package com.astuteflamez.mandomc.listeners.triggers.quests;
 
+import com.astuteflamez.mandomc.MandoMC;
 import com.astuteflamez.mandomc.database.data.PlayerQuest;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import java.util.List;
+import java.util.Set;
 
 public class PlayerClickNpcListener extends QuestTrigger {
-
-    // replace with NPC custom name
-    private final String REG_SHOP = "{\"text\":\"Reg Shop\",\"strikethrough\":false,\"obfuscated\":false,\"bold\":true,\"italic\":false,\"underlined\":false,\"color\":\"gold\"}";
 
     public PlayerClickNpcListener() {}
 
     @EventHandler
     public void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event){
+        ConfigurationSection npcConfig = MandoMC.getInstance().getConfig().getConfigurationSection("quest-npcs");
+
         Player player = event.getPlayer();
         Entity target = event.getRightClicked();
 
@@ -30,15 +33,17 @@ public class PlayerClickNpcListener extends QuestTrigger {
             }
 
             String targetName = pTarget.getCustomName();
-            if (targetName == null) return;
+            if (targetName == null || npcConfig == null) return;
 
-            switch (targetName){
-                case REG_SHOP:
-                    triggerQuests(player, "open_reg_shop", 1.0f);
-                    break;
-                default:
-                    triggerQuests(player, "talk_to_npc_generic", 1.0f);
-                    break;
+            Set<String> npcs = npcConfig.getKeys(false);
+
+            for (String npc : npcs) {
+                String customName = npcConfig.getString(npc + ".custom-name");
+                if (!npc.equals(customName)) continue;
+
+                String trigger = npcConfig.getString(npc + ".quest.trigger");
+                float amount = (float) npcConfig.getDouble(npc + ".quest.amount");
+                triggerQuests(player, trigger, amount);
             }
         }
     }
