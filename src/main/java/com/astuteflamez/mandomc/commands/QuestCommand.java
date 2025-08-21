@@ -30,6 +30,8 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
         String prefix = color(config.getString("Prefix"));
         String noPermission = color(config.getString("NoPermission"));
 
+        if (args.length == 0) args = new String[]{"help"};
+
         String action = args[0].toLowerCase();
         String quest = "";
         if (args.length != 1){
@@ -43,6 +45,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         player.sendMessage(prefix + noPermission);
                         break;
                     }
+                    if (args.length < 3) return false;
                     String desc = args[2];
                     Quest.DurationEnum duration = Quest.DurationEnum.NONE;
                     String trigger;
@@ -100,7 +103,27 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     break;
 
                 case "list":
-                    if (Objects.equals(args[1].toLowerCase(), "all")) {
+                    if (args.length == 1){
+                        Player target;
+                        if (sender instanceof Player player) {
+                            target = player;
+                        }
+                        else {
+                            throw new CommandException("No Player Specified");
+                        }
+
+                        StringBuilder output = new StringBuilder();
+                        List<PlayerQuest> quests = PlayerQuestsTable.getInProgressQuests(target.getUniqueId().toString());
+                        for (PlayerQuest q : quests) {
+                            Quest quest1 = QuestsTable.getQuest(q.getQuestName());
+                            if (quest1 == null) continue;
+                            List<QuestReward> rewards = QuestsTable.getQuestRewards(q.getQuestName());
+                            output.append(quest1.getDisplayString(rewards, q.getQuestProgress())).append("\n");
+                        }
+
+                        outputString(sender, output.toString());
+                    }
+                    else if (Objects.equals(args[1].toLowerCase(), "all")) {
                         if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
                             player.sendMessage(prefix + noPermission);
                             break;
@@ -296,7 +319,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
         ArrayList<String> completions = new ArrayList<>();
         Collection<Player> players = (Collection<Player>) Bukkit.getOnlinePlayers();
         try {
-            switch (args.length) {
+            switch (args.length - 1) {
                 case 0:
                     completions.add("list");
                     if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
