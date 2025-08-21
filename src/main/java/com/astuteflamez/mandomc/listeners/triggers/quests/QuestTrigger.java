@@ -5,15 +5,15 @@ import com.astuteflamez.mandomc.database.data.PlayerQuest;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class QuestTrigger {
-    protected String trigger;
+public abstract class QuestTrigger implements Listener {
 
-    protected List<PlayerQuest> getTriggeredQuests(Player player){
+    protected List<PlayerQuest> getTriggeredQuests(Player player, String trigger){
         ConsoleCommandSender console = Bukkit.getConsoleSender();
         List<PlayerQuest> quests = new ArrayList<PlayerQuest>();
 
@@ -26,7 +26,7 @@ public abstract class QuestTrigger {
         return quests;
     }
 
-    protected void updateTriggeredQuests(Player player, List<PlayerQuest> quests){
+    protected void updateTriggeredQuests(Player player, List<PlayerQuest> quests, String trigger){
         ConsoleCommandSender console = Bukkit.getConsoleSender();
         try {
             for (PlayerQuest quest : quests) {
