@@ -2,5 +2,13 @@
   "pack": {
     "description": "MandoMC",
     "pack_format": 61
-  }
+  },
+ "filter": {
+   "block": [
+     {
+       "namespace": "minecraft",
+       "path": "^advancement?\/(?!recipes?\/)[^\/]+\/?"
+     }
+   ]
+ }
 }

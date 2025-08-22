@@ -16,12 +16,20 @@
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": true
+    "hidden": false
   },
+  "parent": "mandomc:mandomc",
   "criteria": {
     "phone_home": {
-      "trigger": "minecraft:impossible"
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "minecraft:overworld"
+      }
     }
   },
-  "requirements": []
+  "requirements": [
+    [
+      "phone_home"
+    ]
+  ]
 }

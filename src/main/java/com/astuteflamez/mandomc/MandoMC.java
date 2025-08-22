@@ -29,6 +29,7 @@ import com.astuteflamez.mandomc.guis.GUIManager;
 import com.astuteflamez.mandomc.listeners.GlobalRestrictions;
 import com.astuteflamez.mandomc.listeners.PlayerJoinListener;
 import com.astuteflamez.mandomc.listeners.triggers.quests.PlayerClickNpcListener;
+import com.astuteflamez.mandomc.listeners.triggers.quests.PlayerCompleteAdvancementListener;
 import com.astuteflamez.mandomc.listeners.triggers.quests.PlayerUseCommandListener;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -157,6 +158,7 @@ public final class MandoMC extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerClickNpcListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerUseCommandListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerCompleteAdvancementListener(), this);
 
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Status.Server.SERVER_INFO) {
             @Override
