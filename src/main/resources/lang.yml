@@ -73,6 +73,13 @@ commands:
             "Please provide an item name or hold the item you want to add."
           added:
             "Added %s to rewards pool for %s."
+        event:
+          command:
+            "quests rewards <questName> add event <eventName> [metadata]"
+          description:
+            ""
+          added:
+            "Added %s{%s} to rewards pool for %s."
       remove:
         command:
           "quests rewards <questName> remove item <rewardId>"

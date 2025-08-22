@@ -272,7 +272,18 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                                     break;
                                 }
                                 case "event": {
-                                    outputString(sender, "No events are implemented yet, plz contact dev.");
+                                    if (args.length < 5) {
+                                        badCommandHelp(sender, action);
+                                        break;
+                                    }
+                                    String eventName = args[4];
+                                    String eventMeta = null;
+                                    if (args.length > 5) {
+                                        eventMeta = String.join(" ", Arrays.copyOfRange(args, 5, args.length));
+                                    }
+                                    EventRewardsTable.addEventReward(quest1.getRewardsPool(), eventName, eventMeta);
+
+                                    outputString(sender, String.format(config.getString("commands.quests.rewards.add.event.added", ""), eventName, eventMeta, quest));
                                     break;
                                 }
                             }
@@ -321,6 +332,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         help.append(commandHelp("commands.quests.take"));
                         help.append(commandHelp("commands.quests.update"));
                         help.append(commandHelp("commands.quests.rewards.add.item"));
+                        help.append(commandHelp("commands.quests.rewards.add.event"));
                         help.append(commandHelp("commands.quests.rewards.remove"));
                         help.append(commandHelp("commands.quests.rewards.clear"));
                         help.append(commandHelp("commands.quests.roll"));
@@ -466,6 +478,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
             }
             case "rewards": {
                 help.append(commandHelp("commands.quests.rewards.add.item"));
+                help.append(commandHelp("commands.quests.rewards.add.event"));
                 help.append(commandHelp("commands.quests.rewards.remove"));
                 help.append(commandHelp("commands.quests.rewards.clear"));
                 break;
