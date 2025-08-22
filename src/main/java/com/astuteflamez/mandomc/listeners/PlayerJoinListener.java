@@ -33,7 +33,8 @@ public class PlayerJoinListener implements Listener {
             }
         }
         catch (SQLException e) {
-            console.sendMessage("[MandoMC] there was an issue setting up of checking tutorial quest for " + player.getName());
+            console.sendMessage("[MandoMC] there was an issue checking tutorial quest for " + player.getName());
+            console.sendMessage(e.getMessage());
         }
 
         try {
@@ -45,6 +46,7 @@ public class PlayerJoinListener implements Listener {
         }
         catch (SQLException e) {
             console.sendMessage("[MandoMC] there was an issue giving daily/weekly quests to " + player.getName());
+            console.sendMessage(e.getMessage());
         }
     }
 

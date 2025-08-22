@@ -100,7 +100,7 @@ commands:
       description:
         "Deletes a quest."
       deleted:
-        "%S deleted."
+        "%s deleted."
     give:
       command:
         "quests give <questName> <player>"
