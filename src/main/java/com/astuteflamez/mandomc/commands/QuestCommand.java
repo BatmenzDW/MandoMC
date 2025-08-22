@@ -4,6 +4,7 @@ import com.astuteflamez.mandomc.database.*;
 import com.astuteflamez.mandomc.database.data.*;
 import com.astuteflamez.mandomc.LangConfig;
 
+import com.astuteflamez.mandomc.features.quests.TimedQuestScheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static com.astuteflamez.mandomc.MandoMC.color;
@@ -305,7 +307,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
 
                     break;
                 }
-                case "help":
+                case "help": {
                     StringBuilder help = new StringBuilder();
                     help.append(commandHelp("commands.quests.list.user"));
 
@@ -321,13 +323,40 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         help.append(commandHelp("commands.quests.rewards.add.item"));
                         help.append(commandHelp("commands.quests.rewards.remove"));
                         help.append(commandHelp("commands.quests.rewards.clear"));
-
+                        help.append(commandHelp("commands.quests.roll"));
+                        help.append(commandHelp("commands.quests.roll.timed"));
                         // TODO: finish help text
                     }
                     help.append(commandHelp("commands.quests.help"));
 
                     outputString(sender, help.toString());
                     break;
+                }
+                case "roll": {
+                    if (sender instanceof Player player && !player.hasPermission("mmc.quests.manage")) {
+                        player.sendMessage(prefix + noPermission);
+                        break;
+                    }
+                    TimedQuestScheduler scheduler = TimedQuestScheduler.getInstance();
+                    if (args.length < 3) {
+                        scheduler.start();
+                        outputString(sender, config.getString("commands.quests.roll.rolled", "InvalidKey"));
+                        break;
+                    }
+                    String duration = args[2];
+
+                    if (duration.equalsIgnoreCase("daily")){
+                        scheduler.chooseDailyQuests(LocalDateTime.now().toLocalDate().atStartOfDay().plusDays(1));
+                        outputString(sender, config.getString("commands.quests.roll.daily.rolled", "InvalidKey"));
+                    }
+                    else if (duration.equalsIgnoreCase("weekly")){
+                        Calendar cal = TimedQuestScheduler.getNextWeek();
+                        scheduler.chooseWeeklyQuests(LocalDateTime.ofInstant(cal.toInstant(), cal.getTimeZone().toZoneId()).toLocalDate().atStartOfDay());
+                        outputString(sender, config.getString("commands.quests.roll.weekly.rolled", "InvalidKey"));
+                    }
+
+                    break;
+                }
             }
             return true;
         } catch (SQLException e) {
@@ -352,6 +381,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
             switch (args.length - 1) {
                 case 0:
                     completions.add("list");
+                    completions.add("help");
                     if (sender instanceof Player player && player.hasPermission("mmc.quests.manage")) {
                         completions.add("create");
                         completions.add("delete");
@@ -359,6 +389,8 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         completions.add("give");
                         completions.add("take");
                         completions.add("update");
+                        completions.add("rewards");
+                        completions.add("roll");
                     }
                     break;
                 case 1:
@@ -437,6 +469,10 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                 help.append(commandHelp("commands.quests.rewards.remove"));
                 help.append(commandHelp("commands.quests.rewards.clear"));
                 break;
+            }
+            case "roll": {
+                help.append(commandHelp("commands.quests.roll"));
+                help.append(commandHelp("commands.quests.roll.timed"));
             }
             default: {
                 help.append(commandHelp("commands.quests." + commandKey));

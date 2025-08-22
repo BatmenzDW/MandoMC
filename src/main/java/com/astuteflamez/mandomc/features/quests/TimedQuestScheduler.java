@@ -12,10 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.time.LocalDateTime;
 
 public class TimedQuestScheduler {
@@ -55,10 +52,11 @@ public class TimedQuestScheduler {
 
         int dailyQuestsCount = MandoMC.getInstance().getConfig().getInt("quests.daily.number");
         List<Quest> dailyQuests = new ArrayList<>();
-
+        dailyQuestsCount = Math.min(dailyQuestsCount, dailyQuestPool.size());
+        Collections.shuffle(dailyQuests);
         try {
             for (int i = 0; i < dailyQuestsCount; i++) {
-                Quest selected = dailyQuestPool.get(random.nextInt(dailyQuestPool.size()));
+                Quest selected = dailyQuestPool.get(i);
 
                 // TODO: Add checks to make sure quests are valid daily quests
 
@@ -112,9 +110,11 @@ public class TimedQuestScheduler {
         int weeklyQuestsCount = MandoMC.getInstance().getConfig().getInt("quests.weekly.number");
 
         List<Quest> weeklyQuests = new ArrayList<>();
+        weeklyQuestsCount = Math.min(weeklyQuestsCount, weeklyQuestPool.size());
+        Collections.shuffle(weeklyQuests);
         try {
             for (int i = 0; i < weeklyQuestsCount; i++) {
-                Quest selected = weeklyQuestPool.get(random.nextInt(weeklyQuestPool.size()));
+                Quest selected = weeklyQuestPool.get(i);
 
                 // TODO: Add checks to make sure quests are valid weekly quests
 
@@ -172,7 +172,7 @@ public class TimedQuestScheduler {
         }.runTaskLater(MandoMC.getInstance(), delayTicks);
     }
 
-    private static Calendar getNextWeek() {
+    public static Calendar getNextWeek() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
         cal.clear(Calendar.MINUTE);

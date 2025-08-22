@@ -115,6 +115,24 @@ commands:
         "Sets player's progress on quest to progress * 100 %."
       updated:
         "Set %s's progress on %s to %f%%."
+    roll:
+      command:
+        "quests roll"
+      description:
+        "Chooses new daily and weekly quests if there aren't already."
+      rolled:
+        "Chose new daily and weekly quests if there weren't already."
+      timed:
+        command:
+          "quests roll (daily | weekly)"
+        description:
+          "Chooses new daily or weekly quests if there aren't already."
+      daily:
+        rolled:
+          "Chose new daily quests if there weren't already."
+      weekly:
+        rolled:
+          "Chose new weekly quests if there weren't already."
 
 quests:
   tutorial:
