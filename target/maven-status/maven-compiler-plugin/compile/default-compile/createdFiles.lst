@@ -6,6 +6,7 @@ com\astuteflamez\mandomc\database\data\QuestReward.class
 com\astuteflamez\mandomc\features\quests\TimedQuestScheduler$1.class
 com\astuteflamez\mandomc\features\events\rhydonium\RhydoniumFuelTransferListener.class
 com\astuteflamez\mandomc\guis\InventoryButton.class
+com\astuteflamez\mandomc\listeners\triggers\quests\PlayerUseCommandListener.class
 com\astuteflamez\mandomc\features\events\chesthunt\ChestHuntListener.class
 com\astuteflamez\mandomc\features\events\rhydonium\RhydoniumWand.class
 com\astuteflamez\mandomc\LangConfig.class

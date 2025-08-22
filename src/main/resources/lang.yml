@@ -137,9 +137,8 @@ commands:
 quests:
   progress:
     "%s:   %d%%"
-  tutorial:
-    1:
-      name:
-        "Tutorial 1"
-      start:
-        "Started Tutorial 1"
+  phone_home:
+    name:
+    start:
+    advancement:
+      "Phone Home"
