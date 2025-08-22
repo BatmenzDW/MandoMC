@@ -40,7 +40,7 @@ public class PlayerClickNpcListener extends QuestTrigger {
 
             for (String npc : npcs) {
                 String customName = npcConfig.getString(npc + ".custom-name");
-                if (!npc.equals(customName)) continue;
+                if (!targetName.equals(customName)) continue;
 
                 String trigger = npcConfig.getString(npc + ".quest.trigger");
                 float amount = (float) npcConfig.getDouble(npc + "quest.amount");
@@ -49,14 +49,5 @@ public class PlayerClickNpcListener extends QuestTrigger {
         }
     }
 
-    private void triggerQuests(Player player, String trigger, float amount){
-        List<PlayerQuest> quests = getTriggeredQuests(player, trigger);
 
-        Bukkit.getLogger().info(player.getName() + " triggered " + trigger + " for amount" + amount);
-        for (PlayerQuest quest : quests){
-            quest.setQuestProgress(quest.getQuestProgress() + amount);
-        }
-
-        updateTriggeredQuests(player, quests, trigger);
-    }
 }

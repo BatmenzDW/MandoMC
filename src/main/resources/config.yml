@@ -60,6 +60,15 @@ quest-npcs:
         "open_reg_shop"
       amount:
         1.0
+
+quest-commands:
+  warps:
+    quest:
+      trigger:
+        "warps"
+      amount:
+        1.0
+
 # ================================
 # 🌸 Aesthetics
 # ================================

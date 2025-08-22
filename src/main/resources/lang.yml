@@ -135,6 +135,8 @@ commands:
           "Chose new weekly quests if there weren't already."
 
 quests:
+  progress:
+    "%s:   %d%%"
   tutorial:
     1:
       name:
