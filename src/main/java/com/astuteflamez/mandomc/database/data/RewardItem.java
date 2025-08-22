@@ -1,5 +1,6 @@
 package com.astuteflamez.mandomc.database.data;
 
+import com.astuteflamez.mandomc.LangConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -70,12 +71,16 @@ public class RewardItem extends QuestReward{
     }
 
     public String toString(){
-        return getItemStack().displayName().toString();
+        return getRewardDescription();
     }
 
     @Override
     public String getRewardDescription() {
-        return getItemStack() + "";
+        String name = LangConfig.get().getString(getItemStack().translationKey());
+        if (name == null) {
+            return getItemStack().translationKey();
+        }
+        return name;
     }
 
     @Override

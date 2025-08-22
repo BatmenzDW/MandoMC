@@ -100,7 +100,7 @@ commands:
       description:
         "Deletes a quest."
       deleted:
-        "%S deleted."
+        "%s deleted."
     give:
       command:
         "quests give <questName> <player>"
@@ -146,6 +146,13 @@ quests:
     "%s:   %d%%"
   phone_home:
     name:
+      "phone_home"
     start:
+      "Quest Phone Home started."
     advancement:
       "phone_home"
+
+item:
+  minecraft:
+    diamond_sword:
+      "Durasteel Sword"

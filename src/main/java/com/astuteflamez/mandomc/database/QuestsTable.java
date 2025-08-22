@@ -52,7 +52,7 @@ public class QuestsTable extends Database {
         statement.setString(1, quest.getQuestName());
         statement.setString(2, quest.getQuestDesc());
         statement.setString(3, quest.getQuestTrigger());
-        statement.setInt(4, pool);
+        statement.setInt(4, pool + 1);
         statement.setString(5, quest.getParent());
         statement.setInt(6, quest.getDuration().ordinal());
         statement.setTimestamp(7, quest.getExpiration());

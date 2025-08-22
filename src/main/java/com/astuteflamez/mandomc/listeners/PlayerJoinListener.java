@@ -28,7 +28,7 @@ public class PlayerJoinListener implements Listener {
         ConsoleCommandSender console = Bukkit.getConsoleSender();
 
         try {
-            if (!player.hasPlayedBefore() | PlayerQuestsTable.getActiveQuests(player.getUniqueId().toString()).isEmpty()) {
+            if (!player.hasPlayedBefore() | PlayerQuestsTable.getQuest(player.getUniqueId().toString(), LangConfig.get().getString("quests.phone_home.name")) == null) {
                 giveTutorialQuest(player);
             }
         }
@@ -49,10 +49,10 @@ public class PlayerJoinListener implements Listener {
     }
 
     private void giveTutorialQuest(Player player) throws SQLException {
-        String questName = LangConfig.get().getString("quests.tutorial.1.name");
+        String questName = LangConfig.get().getString("quests.phone_home.name");
 
         PlayerQuestsTable.playerStartQuest(player.getUniqueId().toString(), questName);
 
-        player.sendMessage(LangConfig.get().getString("quests.tutorial.1.start"));
+        player.sendMessage(LangConfig.get().getString("quests.tutorial.1.start", "InvalidKey"));
     }
 }

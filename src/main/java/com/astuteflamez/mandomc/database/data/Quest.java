@@ -114,11 +114,11 @@ public class Quest {
     public void setRewardsPool(Integer rewardsPool) {RewardsPool = rewardsPool;}
 
     public String getDisplayString(List<QuestReward> rewards){
-        return QuestName + ": " + QuestDesc + " \n\t Rewards: " + rewards;
+        return QuestName + ": " + QuestDesc + " \n§7   Rewards: " + rewards + "§r";
     }
 
     public String getDisplayString(List<QuestReward> rewards, float progress){
-        return QuestName + ": " + QuestDesc + "   Parent: " + Parent + " \n§7   Rewards: " + rewards + "\n   Progress: " + Math.round(progress * 1000)/10 + "%§r";
+        return QuestName + ": " + QuestDesc + "   Parent: " + Parent + "\n§7   Progress: " + Math.round(progress * 1000)/10 + "%\n   Rewards: " + rewards +  "§r";
     }
 
     public enum DurationEnum {

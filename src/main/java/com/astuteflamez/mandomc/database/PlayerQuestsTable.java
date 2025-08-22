@@ -131,6 +131,27 @@ public class PlayerQuestsTable extends Database {
         }
     }
 
+    public static PlayerQuest getQuest(String uuid, String questName) throws SQLException {
+        Connection connection = getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM PlayerQuests WHERE uuid = ? AND QuestName = ?");
+        statement.setString(1, uuid);
+        statement.setString(2, questName);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        PlayerQuest quest = null;
+        if (resultSet.next()) {
+            quest = new PlayerQuest(UUID.fromString(uuid), questName, resultSet.getFloat("Progress"));
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+
+        return quest;
+    }
+
     public static List<PlayerQuest> getActiveQuests(String uuid) throws SQLException {
         Connection connection = getConnection();
 
