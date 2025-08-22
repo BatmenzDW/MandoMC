@@ -214,7 +214,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     Player targetT = Bukkit.getPlayer(targetNameT);
                     if (targetT == null) break;
                     PlayerQuestsTable.removePlayerQuest(targetT.getUniqueId().toString(), quest);
-                    outputString(sender, String.format(config.getString("commands.quests.give.given", ""), targetNameT, quest));
+                    outputString(sender, String.format(config.getString("commands.quests.take.taken", ""), targetNameT, quest));
                     break;
                 }
                 case "update": {
