@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:stick",
+      "components": {
+        "minecraft:custom_model_data": {
+          "floats": [
+            1
+          ]
+        }
+      },
+      "count": 1
+    },
+    "title": "Phone Home",
+    "description": "Use /warps to teleport to Earth",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "mandomc:mandomc",
+  "criteria": {
+    "phone_home": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "minecraft:overworld"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "phone_home"
+    ]
+  ]
+}

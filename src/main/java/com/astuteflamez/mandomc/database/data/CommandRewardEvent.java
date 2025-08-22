@@ -13,10 +13,15 @@ public class CommandRewardEvent extends RewardEvent {
     @Override
     public void givePlayer(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
-        if (player != null) return;
+        if (player == null) return;
 
-        String command = String.format(metaData, player.getName());
+        String command = String.format(trimBraces(metaData), player.getName());
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+    }
+
+    public static String trimBraces(String str) {
+        if (str.startsWith("{") && str.endsWith("}")) str = str.substring(1, str.length() - 1);
+        return str;
     }
 }

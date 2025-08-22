@@ -1,3 +1,4 @@
+com\astuteflamez\mandomc\database\data\CommandRewardEvent.class
 com\astuteflamez\mandomc\features\vehicles\variants\SpeederBike.class
 com\astuteflamez\mandomc\guis\InventoryGUI.class
 com\astuteflamez\mandomc\commands\EventsCommand.class
@@ -90,6 +91,7 @@ com\astuteflamez\mandomc\features\vehicles\VehicleRunnable$BoostState.class
 com\astuteflamez\mandomc\features\events\rhydonium\RhydoniumLocationManager.class
 com\astuteflamez\mandomc\database\QuestsTable.class
 com\astuteflamez\mandomc\features\events\koth\KothManager.class
+com\astuteflamez\mandomc\listeners\triggers\quests\PlayerCompleteAdvancementListener.class
 com\astuteflamez\mandomc\features\events\rhydonium\RhydoniumCommands.class
 com\astuteflamez\mandomc\database\data\Quest.class
 com\astuteflamez\mandomc\features\events\koth\KothCommand.class
