@@ -313,7 +313,7 @@ public class QuestsTable extends Database {
             String eventName = resultSet2.getString("eventName");
             String metaData = resultSet2.getString("metaData");
 
-            rewards.add(new RewardEvent(id, eventName, metaData, poolId));
+            rewards.add(RewardEvent.getRewardEvent(id, eventName, metaData, poolId));
         }
 
         resultSet2.close();

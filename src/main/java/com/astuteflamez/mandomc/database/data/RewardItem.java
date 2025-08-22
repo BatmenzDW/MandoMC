@@ -70,7 +70,7 @@ public class RewardItem extends QuestReward{
     }
 
     public String toString(){
-        return "id: " + id + "; item:" + getItemStack();
+        return getItemStack().displayName().toString();
     }
 
     @Override

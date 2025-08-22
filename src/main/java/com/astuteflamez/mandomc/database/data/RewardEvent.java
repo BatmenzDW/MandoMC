@@ -2,10 +2,10 @@ package com.astuteflamez.mandomc.database.data;
 
 import java.util.UUID;
 
-public class RewardEvent extends QuestReward {
+public abstract class RewardEvent extends QuestReward {
 
-    private String eventName;
-    private String metaData;
+    protected String eventName;
+    protected String metaData;
 
     public RewardEvent(int id, String eventName, String metaData, int poolId) {
         this.id = id;
@@ -15,12 +15,16 @@ public class RewardEvent extends QuestReward {
     }
 
     @Override
-    public void givePlayer(UUID uuid) {
-        // TODO: add givePlayer RewardEvent code
-    }
-
-    @Override
     public String getRewardDescription() {
         return eventName;
+    }
+
+    public static RewardEvent getRewardEvent(int id, String eventName, String metaData, int poolId) {
+        if (eventName.contains("Command"))
+        {
+            return new CommandRewardEvent(id, eventName, metaData, poolId);
+        }
+
+        return null;
     }
 }

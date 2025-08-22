@@ -64,7 +64,7 @@ public class EventRewardsTable extends Database{
             String eventName = resultSet.getString("EventName");
             String metadata = resultSet.getString("MetaData");
 
-            events.add(new RewardEvent(id, eventName, metadata, poolId));
+            events.add(RewardEvent.getRewardEvent(id, eventName, metadata, poolId));
         }
 
         resultSet.close();
