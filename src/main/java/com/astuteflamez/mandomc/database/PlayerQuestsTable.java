@@ -203,7 +203,7 @@ public class PlayerQuestsTable extends Database {
         ResultSet resultSet = statement.executeQuery();
 
         List<PlayerQuest> inProgressQuests = new ArrayList<>();
-        if (resultSet.next()) {
+        while (resultSet.next()) {
             PlayerQuest quest = new PlayerQuest(UUID.fromString(uuid), resultSet.getString("QuestName"), resultSet.getFloat("Progress"));
             inProgressQuests.add(quest);
         }

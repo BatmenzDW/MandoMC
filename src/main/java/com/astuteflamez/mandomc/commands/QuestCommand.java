@@ -55,7 +55,10 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                         for (String rDesc : Arrays.copyOfRange(args, 3, args.length)) {
                             descEnd++;
                             desc.append(" ").append(rDesc);
-                            if (rDesc.endsWith("\"")) break;
+                            if (rDesc.endsWith("\"")) {
+                                desc = new StringBuilder(desc.substring(0, rDesc.length() - 1));
+                                break;
+                            }
                         }
                     }
                     Quest.DurationEnum duration = Quest.DurationEnum.NONE;
