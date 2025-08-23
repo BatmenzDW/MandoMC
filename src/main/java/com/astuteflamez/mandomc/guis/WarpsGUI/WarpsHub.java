@@ -101,7 +101,7 @@ public class WarpsHub extends InventoryGUI {
                     }
 
                     if (worldName.equalsIgnoreCase("world")) {
-                        QuestTrigger.checkQuests(player, "phone_home", "quests-commands");
+                        QuestTrigger.checkQuests(player, "phone_home", "quest-commands");
                     }
 
                     Location loc = new Location(world, x, y, z, yaw, pitch);

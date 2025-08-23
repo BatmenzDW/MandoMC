@@ -78,6 +78,9 @@ public abstract class QuestTrigger implements Listener {
     public static void checkQuests(Player player, String trigger, String configKey){
         ConfigurationSection triggerConfig = MandoMC.getInstance().getConfig().getConfigurationSection(configKey);
 
+        if (player.hasPermission("mmc.quests.manage")){
+            player.sendMessage("Triggered " + trigger + " for " + player.getName() + " with config key " + configKey);
+        }
         if (triggerConfig == null) return;
 
         Set<String> keys = triggerConfig.getKeys(false);

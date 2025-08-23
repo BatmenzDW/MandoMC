@@ -70,12 +70,12 @@ quest-commands:
         1.0
 
 quest-advancements:
-#  phone_home:
-#    quest:
-#      trigger:
-#        "phone_home"
-#      amount:
-#        1.0
+  durasteel:
+    quest:
+      trigger:
+        "durasteel"
+      amount:
+        1.0
 
 # ================================
 # 🌸 Aesthetics
