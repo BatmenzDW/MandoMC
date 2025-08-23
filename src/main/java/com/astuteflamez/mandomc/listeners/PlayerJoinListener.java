@@ -33,7 +33,7 @@ public class PlayerJoinListener implements Listener {
                     giveTutorialQuest(player);
                 }
                 catch (SQLException e) {
-                    console.sendMessage("[MandoMC] there was an issue giving tutorial quest to " + player.getName());
+                    console.sendMessage("[MandoMC] there was an issue giving " + LangConfig.get().getString("quests.phone_home.name") + " to " + player.getName());
                     console.sendMessage(e.getMessage());
                     console.sendMessage(e.getStackTrace()[0].toString());
                 }
@@ -63,6 +63,6 @@ public class PlayerJoinListener implements Listener {
 
         PlayerQuestsTable.playerStartQuest(player.getUniqueId().toString(), questName);
 
-        player.sendMessage(LangConfig.get().getString("quests.tutorial.1.start", "InvalidKey"));
+        player.sendMessage(LangConfig.get().getString("quests.phone_home.start", "InvalidKey"));
     }
 }

@@ -49,7 +49,7 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                     }
                     StringBuilder desc = new StringBuilder(args[2]);
                     int descEnd = 2;
-                    if (desc.toString().startsWith("\"")){
+                    if (desc.toString().startsWith("\"") && !desc.toString().endsWith("\"")){
                         desc = new StringBuilder(desc.substring(1));
 
                         for (String rDesc : Arrays.copyOfRange(args, 3, args.length)) {

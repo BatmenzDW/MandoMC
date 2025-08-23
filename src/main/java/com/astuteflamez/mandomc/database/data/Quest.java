@@ -2,6 +2,7 @@ package com.astuteflamez.mandomc.database.data;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 public class Quest {
     private String QuestName;
@@ -118,6 +119,7 @@ public class Quest {
     }
 
     public String getDisplayString(List<QuestReward> rewards, float progress){
+        if (Parent == null || Parent.equals("null")) return QuestName + ": " + QuestDesc + "\n§7   Progress: " + Math.round(progress * 1000)/10 + "%\n   Rewards: " + rewards +  "§r";
         return QuestName + ": " + QuestDesc + "   Parent: " + Parent + "\n§7   Progress: " + Math.round(progress * 1000)/10 + "%\n   Rewards: " + rewards +  "§r";
     }
 
