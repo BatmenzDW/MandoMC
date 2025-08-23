@@ -176,7 +176,7 @@ public class PlayerQuestsTable extends Database {
     public static List<PlayerQuest> getInactiveTimedQuests(String uuid) throws SQLException {
         Connection connection = getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT q.QuestName as QuestName FROM quests as q LEFT JOIN playerQuests as p ON p.QuestName = q.QuestName WHERE (p.uuid IS NULL OR p.uuid != ?) AND q.Expiration > CURRENT_TIMESTAMP");
+        PreparedStatement statement = connection.prepareStatement("SELECT q.QuestName as QuestName FROM quests as q LEFT JOIN PlayerQuests as p ON p.QuestName = q.QuestName WHERE (p.uuid IS NULL OR p.uuid != ?) AND q.Expiration > CURRENT_TIMESTAMP");
         statement.setString(1, uuid);
 
         ResultSet resultSet = statement.executeQuery();

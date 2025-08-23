@@ -29,12 +29,20 @@ public class PlayerJoinListener implements Listener {
 
         try {
             if (!player.hasPlayedBefore() | PlayerQuestsTable.getQuest(player.getUniqueId().toString(), LangConfig.get().getString("quests.phone_home.name")) == null) {
-                giveTutorialQuest(player);
+                try {
+                    giveTutorialQuest(player);
+                }
+                catch (SQLException e) {
+                    console.sendMessage("[MandoMC] there was an issue giving tutorial quest to " + player.getName());
+                    console.sendMessage(e.getMessage());
+                    console.sendMessage(e.getStackTrace()[0].toString());
+                }
             }
         }
         catch (SQLException e) {
             console.sendMessage("[MandoMC] there was an issue checking tutorial quest for " + player.getName());
             console.sendMessage(e.getMessage());
+            console.sendMessage(e.getStackTrace()[0].toString());
         }
 
         try {
