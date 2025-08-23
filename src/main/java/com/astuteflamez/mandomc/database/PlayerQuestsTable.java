@@ -239,7 +239,7 @@ public class PlayerQuestsTable extends Database {
     public static List<PlayerQuest> getTriggeredQuests(String uuid, String trigger) throws SQLException {
         Connection connection = getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT p.QuestName, p.Progress, q.QuestTrigger, q.Parent FROM `PlayerQuests` as p INNER JOIN `quests` as q ON p.QuestName = q.QuestName WHERE p.Progress < 1.0 AND p.uuid = ? AND q.QuestTrigger = ? AND q.Expiration > ? ORDER BY Progress DESC");
+        PreparedStatement statement = connection.prepareStatement("SELECT p.QuestName, p.Progress, q.QuestTrigger, q.Parent FROM `PlayerQuests` as p INNER JOIN `quests` as q ON p.QuestName = q.QuestName WHERE p.Progress < 1.0 AND p.uuid = ? AND q.QuestTrigger = ? AND (q.Expiration > ? OR q.Expiration IS NULL) ORDER BY Progress DESC");
         statement.setString(1, uuid);
         statement.setString(2, trigger);
         statement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));

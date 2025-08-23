@@ -33,4 +33,8 @@ public class PlayerQuest {
     public void setQuestProgress(float questProgress) {
         this.questProgress = questProgress;
     }
+
+    public String toString(){
+        return questName;
+    }
 }
