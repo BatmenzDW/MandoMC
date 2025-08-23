@@ -62,20 +62,20 @@ quest-npcs:
         1.0
 
 quest-commands:
-#  warps:
-#    quest:
-#      trigger:
-#        "warps"
-#      amount:
-#        1.0
-
-quest-advancements:
   phone_home:
     quest:
       trigger:
         "phone_home"
       amount:
         1.0
+
+quest-advancements:
+#  phone_home:
+#    quest:
+#      trigger:
+#        "phone_home"
+#      amount:
+#        1.0
 
 # ================================
 # 🌸 Aesthetics

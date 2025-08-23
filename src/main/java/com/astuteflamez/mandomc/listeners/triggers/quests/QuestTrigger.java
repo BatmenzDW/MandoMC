@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -15,6 +16,7 @@ import org.bukkit.event.Listener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public abstract class QuestTrigger implements Listener {
 
@@ -70,6 +72,23 @@ public abstract class QuestTrigger implements Listener {
         for (String criteria : progress.getRemainingCriteria())
         {
             progress.awardCriteria(criteria);
+        }
+    }
+
+    public static void checkQuests(Player player, String trigger, String configKey){
+        ConfigurationSection triggerConfig = MandoMC.getInstance().getConfig().getConfigurationSection(configKey);
+
+        if (triggerConfig == null) return;
+
+        Set<String> keys = triggerConfig.getKeys(false);
+
+        for (String key: keys){
+            if (trigger.contains(key)){
+                String triggerK = triggerConfig.getString(key + ".quest.trigger");
+                float amount = (float) triggerConfig.getDouble(key + ".quest.amount");
+
+                triggerQuests(player, triggerK, amount);
+            }
         }
     }
 }

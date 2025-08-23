@@ -4,6 +4,7 @@ import com.astuteflamez.mandomc.guis.GUIManager;
 import com.astuteflamez.mandomc.guis.InventoryButton;
 import com.astuteflamez.mandomc.features.warps.WarpConfig;
 import com.astuteflamez.mandomc.guis.InventoryGUI;
+import com.astuteflamez.mandomc.listeners.triggers.quests.QuestTrigger;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
@@ -97,6 +98,10 @@ public class WarpsHub extends InventoryGUI {
                         player.sendMessage("§cWorld '" + worldName + "' is not loaded!");
                         player.closeInventory();
                         return;
+                    }
+
+                    if (worldName.equalsIgnoreCase("world")) {
+                        QuestTrigger.checkQuests(player, "phone_home", "quests-commands");
                     }
 
                     Location loc = new Location(world, x, y, z, yaw, pitch);

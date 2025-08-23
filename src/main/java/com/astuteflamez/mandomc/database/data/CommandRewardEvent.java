@@ -26,6 +26,9 @@ public class CommandRewardEvent extends RewardEvent {
     }
 
     public String toString(){
+        if (eventName.contains("Command")){
+            return eventName.split("Command")[1];
+        }
         return eventName;
     }
 }
