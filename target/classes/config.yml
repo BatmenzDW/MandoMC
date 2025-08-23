@@ -62,18 +62,26 @@ quest-npcs:
         1.0
 
 quest-commands:
-  phone_home:
-    quest:
-      trigger:
-        "phone_home"
-      amount:
-        1.0
+#  phone_home:
+#    quest:
+#      trigger:
+#        "phone_home"
+#      amount:
+#        1.0
 
 quest-advancements:
   durasteel:
     quest:
       trigger:
         "durasteel"
+      amount:
+        1.0
+
+quest-other:
+  phone_home:
+    quest:
+      trigger:
+        "phone_home"
       amount:
         1.0
 

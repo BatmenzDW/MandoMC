@@ -1,5 +1,7 @@
 package com.astuteflamez.mandomc.database.data;
 
+import org.bukkit.Bukkit;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -46,6 +48,7 @@ public class Quest {
         QuestTrigger = trigger;
         Duration = DurationEnum.NONE;
         Weight = weight;
+//        Bukkit.getLogger().info("Quest: " + questName + " " + questDesc + " " + trigger + " " + parent);
     }
 
     public Quest(String questName, String questDesc, String trigger, DurationEnum duration, String parent, int weight) {

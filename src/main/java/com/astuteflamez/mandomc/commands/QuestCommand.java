@@ -56,11 +56,12 @@ public class QuestCommand implements CommandExecutor, TabCompleter {
                             descEnd++;
                             desc.append(" ").append(rDesc);
                             if (rDesc.endsWith("\"")) {
-                                desc = new StringBuilder(desc.substring(0, rDesc.length() - 1));
+                                desc = new StringBuilder(desc.substring(0, desc.length() - 1));
                                 break;
                             }
                         }
                     }
+//                    Bukkit.getLogger().info(desc.toString());
                     Quest.DurationEnum duration = Quest.DurationEnum.NONE;
                     String trigger;
                     String parent;

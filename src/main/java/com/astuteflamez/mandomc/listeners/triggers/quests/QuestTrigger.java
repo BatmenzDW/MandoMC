@@ -61,7 +61,8 @@ public abstract class QuestTrigger implements Listener {
         Bukkit.getLogger().info("Quests triggered: " + quests);
         for (PlayerQuest quest : quests){
             quest.setQuestProgress(quest.getQuestProgress() + amount);
-            player.sendMessage(String.format(config.getString("quests.progress", "InvalidKey"), quest.getQuestName(), quest.getQuestProgress() * 100));
+            if (quest.getQuestProgress() >= 1.0f) player.sendMessage(String.format(config.getString("quests.completed", "InvalidKey"), quest.getQuestName()));
+            else player.sendMessage(String.format(config.getString("quests.progress", "InvalidKey"), quest.getQuestName(), quest.getQuestProgress() * 100));
             if (quest.getQuestProgress() >= 1.0f){
                 triggerAdvancement(player, quest.getQuestName());
             }

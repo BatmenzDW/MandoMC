@@ -2,6 +2,7 @@ C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\f
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\features\vehicles\variants\XWing.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\database\data\PlayerQuest.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\guis\RecipesGUI\RecipesHub.java
+C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\listeners\triggers\quests\PlayerUseCommandListener.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\features\vehicles\listeners\SpawnListener.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\features\events\RandomEventScheduler.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\commands\EventsCommand.java
@@ -25,6 +26,7 @@ C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\f
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\features\events\chesthunt\ChestLocationManager.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\features\events\rhydonium\RhydoniumLocationManager.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\features\events\chesthunt\ChestHuntListener.java
+C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\database\data\CommandRewardEvent.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\database\data\QuestReward.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\listeners\GlobalRestrictions.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\guis\EventsGUI\EventsHub.java
@@ -77,6 +79,7 @@ C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\l
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\features\vehicles\listeners\EnterListener.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\guis\InventoryGUI.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\features\vehicles\listeners\ShootListener.java
+C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\listeners\triggers\quests\PlayerCompleteAdvancementListener.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\commands\ReloadCommand.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\guis\InventoryButton.java
 C:\Users\turtl\Documents\GitHub\MandoMC\src\main\java\com\astuteflamez\mandomc\database\data\Quest.java

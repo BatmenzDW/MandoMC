@@ -44,6 +44,8 @@ public class QuestsTable extends Database {
         resultSet.close();
         statement0.close();
 
+//        Bukkit.getLogger().info("Created new quest " + quest.getQuestName() + " with description: " + quest.getQuestDesc());
+
         PreparedStatement statement = connection.prepareStatement(
                 "INSERT INTO quests " +
                         "(QuestName, Description, QuestTrigger, RewardPool, Parent, " +

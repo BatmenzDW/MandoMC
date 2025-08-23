@@ -143,7 +143,9 @@ commands:
 
 quests:
   progress:
-    "%s:   %d%%"
+    "%s:   %f%%"
+  completed:
+    "%s: Completed"
   phone_home:
     name:
       "phone_home"
