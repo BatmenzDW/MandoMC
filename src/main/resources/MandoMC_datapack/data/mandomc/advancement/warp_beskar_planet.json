@@ -5,14 +5,13 @@
       "components": {
         "minecraft:custom_model_data": {
           "floats": [
-            1
+            5
           ]
         }
-      },
-      "count": 1
+      }
     },
-    "title": "Phone Home",
-    "description": "Use /warps to teleport to Earth",
+    "title": "Home of Clan Visla",
+    "description": "Use /warps to visit Concordia",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,

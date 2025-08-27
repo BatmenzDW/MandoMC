@@ -4,7 +4,7 @@
       "id": "minecraft:diamond"
     },
     "title": "Stronger Than Steel",
-    "description": "Acquire Durasteel",
+    "description": "Aquire Durasteel",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,

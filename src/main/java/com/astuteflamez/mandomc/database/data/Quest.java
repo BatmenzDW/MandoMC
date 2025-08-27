@@ -122,7 +122,8 @@ public class Quest {
     }
 
     public String getDisplayString(List<QuestReward> rewards, float progress){
-        return QuestName + ": " + QuestDesc + "\n§7   Progress: " + Math.round(progress * 1000)/10 + "%\n   Rewards: " + rewards +  "§r";
+        String descriptor = QuestDesc.isEmpty() ? QuestName : QuestDesc;
+        return descriptor + "\n§7   Progress: " + Math.round(progress * 1000)/10 + "%\n   Rewards: " + rewards +  "§r";
     }
 
     public enum DurationEnum {

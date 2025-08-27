@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:echo_shard",
+      "components": {
+        "minecraft:custom_model_data": {
+          "floats": [
+            20
+          ]
+        }
+      },
+      "count": 1
+    },
+    "title": "Forged of Beskar",
+    "description": "Craft a Beskar Plate",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "mandomc:raw_beskar",
+  "criteria": {
+    "craft beskar plate": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mandomc:beskar_plate"
+      }
+    }
+  },
+  "rewards": {
+    "loot": [
+      "mandomc:beskar_upgrade_template"
+    ]
+  }
+}

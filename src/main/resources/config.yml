@@ -84,6 +84,12 @@ quest-other:
         "phone_home"
       amount:
         1.0
+  warp-beskar-planet:
+    quest:
+      trigger:
+        "warp_beskar_planet"
+      amount:
+        1.0
 
 # ================================
 # 🌸 Aesthetics

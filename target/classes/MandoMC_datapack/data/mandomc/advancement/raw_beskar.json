@@ -1,0 +1,44 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:echo_shard",
+      "components": {
+        "minecraft:custom_model_data": {
+          "floats": [
+            19
+          ]
+        }
+      }
+    },
+    "title": "Foundling",
+    "description": "Acquire Raw Beskar",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "mandomc:warp_beskar_planet",
+  "criteria": {
+    "Raw Beskar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:echo_shard",
+            "count": 1,
+            "components": {
+              "minecraft:custom_model_data": {
+                "floats": [
+                  19
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "mandomc:beskar_plate"
+    ]
+  }
+}

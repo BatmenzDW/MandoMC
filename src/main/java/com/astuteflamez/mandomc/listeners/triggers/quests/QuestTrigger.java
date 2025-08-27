@@ -61,8 +61,8 @@ public abstract class QuestTrigger implements Listener {
         Bukkit.getLogger().info("Quests triggered: " + quests);
         for (PlayerQuest quest : quests){
             quest.setQuestProgress(quest.getQuestProgress() + amount);
-            if (quest.getQuestProgress() >= 1.0f) player.sendMessage(String.format(config.getString("quests.completed", "InvalidKey"), quest.getQuestName()));
-            else player.sendMessage(String.format(config.getString("quests.progress", "InvalidKey"), quest.getQuestName(), quest.getQuestProgress() * 100));
+//            if (quest.getQuestProgress() >= 1.0f) player.sendMessage(String.format(config.getString("quests.completed", "InvalidKey"), quest.getQuestName()));
+//            else player.sendMessage(String.format(config.getString("quests.progress", "InvalidKey"), quest.getQuestName(), quest.getQuestProgress() * 100));
             if (quest.getQuestProgress() >= 1.0f){
                 triggerAdvancement(player, quest.getQuestName());
             }
@@ -85,7 +85,8 @@ public abstract class QuestTrigger implements Listener {
         AdvancementProgress progress = player.getAdvancementProgress(advancement);
         for (String criteria : progress.getRemainingCriteria())
         {
-            progress.awardCriteria(criteria);
+            if (criteria.equals("impossible"))
+                progress.awardCriteria(criteria);
         }
     }
 

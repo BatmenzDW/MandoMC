@@ -103,6 +103,9 @@ public class WarpsHub extends InventoryGUI {
                     if (worldName.equalsIgnoreCase("world")) {
                         QuestTrigger.checkQuests(player, "phone_home", "quest-other");
                     }
+                    else if (worldName.equalsIgnoreCase("geonosis")) {
+                        QuestTrigger.checkQuests(player, "warp-beskar-planet", "quest-other");
+                    }
 
                     Location loc = new Location(world, x, y, z, yaw, pitch);
                     player.teleport(loc);
