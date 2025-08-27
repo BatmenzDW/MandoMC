@@ -75,13 +75,23 @@ public abstract class QuestTrigger implements Listener {
         FileConfiguration config = LangConfig.get();
 
         String questKey = config.getString("quests." + quest + ".advancement");
-        if (questKey == null) return;
+        if (questKey == null){
+            Bukkit.getLogger().info("Couldn't get quest Advancement triggered key for " + player.getName() + " for quest " + quest);
+            return;
+        }
 
         NamespacedKey advKey = NamespacedKey.fromString(questKey, MandoMC.getInstance());
-        if (advKey == null) return;
+        if (advKey == null){
+            Bukkit.getLogger().info("Couldn't get namespaced key for " + player.getName() + " for quest " + quest);
+            return;
+        }
         Advancement advancement = Bukkit.getAdvancement(advKey);
-        if (advancement == null) return;
+        if (advancement == null) {
+            Bukkit.getLogger().info("Couldn't get advancement for " + player.getName() + " for quest " + quest);
+            return;
+        }
 
+        Bukkit.getLogger().info("Advancement triggered for " + player.getName() + ": " + advKey);
         AdvancementProgress progress = player.getAdvancementProgress(advancement);
         for (String criteria : progress.getRemainingCriteria())
         {

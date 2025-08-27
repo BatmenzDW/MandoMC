@@ -30,7 +30,7 @@ public class PlayerCompleteAdvancementListener extends QuestTrigger {
         for (String commandKey : commandKeys) {
             if (commandKey.contains(name)) {
                 String trigger = triggerConfig.getString(commandKey + ".quest.trigger");
-                float amount = (float) triggerConfig.getDouble(commandKey + ".quest.amount");
+                float amount = (float) triggerConfig.getDouble(commandKey + ".quest.amount", 1.0);
 
                 triggerQuests(player, trigger, amount);
             }

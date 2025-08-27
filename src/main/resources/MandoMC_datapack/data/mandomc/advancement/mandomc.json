@@ -4,7 +4,6 @@
       "id": "minecraft:netherite_helmet"
     },
     "title": "MandoMC",
-    "description": "MandoMC advancements",
     "frame": "task",
     "show_toast": false,
     "announce_to_chat": false

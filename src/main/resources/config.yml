@@ -76,6 +76,20 @@ quest-advancements:
         "durasteel"
       amount:
         1.0
+  raw_beskar:
+    quest:
+      trigger:
+        "raw_beskar"
+      amount:
+        1.0
+  beskar_plate:
+    quest:
+      trigger:
+        "beskar_plate"
+  beskar_armor:
+    quest:
+      trigger:
+        "beskar_armor"
 
 quest-other:
   phone_home:

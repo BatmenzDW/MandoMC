@@ -24,6 +24,10 @@ public abstract class RewardEvent extends QuestReward {
         {
             return new CommandRewardEvent(id, eventName, metaData, poolId);
         }
+        else if (eventName.contains("Fake"))
+        {
+            return new FakeRewardEvent(id, eventName, metaData, poolId);
+        }
 
         return null;
     }

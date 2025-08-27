@@ -153,6 +153,9 @@ quests:
       "Quest Phone Home started."
     advancement:
       "phone_home"
+  warp_beskar_planet:
+    name:
+      "warp_beskar_planet"
 
 item:
   minecraft:
